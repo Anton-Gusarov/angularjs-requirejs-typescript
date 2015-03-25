@@ -5,5 +5,5 @@ import app = require("app");
 import ng = require("angular");
 
 requirejs(['domReady!'], function (document) {
-    ng.bootstrap(document, ['myApp']);
+    ng.bootstrap(document, ['app']);
 });
