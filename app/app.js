@@ -1,14 +1,9 @@
-'use strict';
-
-// Declare app level module which depends on views, and components
-angular.module('myApp', [
-    'ngRoute',
-    'myApp.main',
-    'myApp.view1',
-    'myApp.view2',
-    'myApp.version'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider
-      .otherwise({redirectTo: '/'});
-}]);
+define(["require", "exports", 'angular', "main/main", "angular-route", "angular-resource"], function (require, exports, angular) {
+    exports.mngmodule = angular.module('myApp', [
+        'ngRoute',
+        'myApp.main'
+    ]).config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.otherwise({ redirectTo: '/' });
+    }]);
+});
+//# sourceMappingURL=app.js.map

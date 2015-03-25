@@ -1,24 +1,25 @@
-/// <reference path='typings/node/node.d.ts' />
-/// <reference path='typings/mongodb/mongodb.d.ts' />
-/// <reference path='typings/mysql/mysql.d.ts' />
-/// <reference path='typings/express/express.d.ts' />
-/// <reference path='typings/express/express-middleware.d.ts' />
-var fs = require("fs");
-var data = require('zara_couts.json');
+/// <reference path='typings/all.d.ts' />
+var db = require("db");
+var mysql = require("mysql");
+var express = require("express");
+var _ = require("lodash");
 var mysqlLocal = {
     host: '127.0.0.1',
     user: 'root',
     password: '',
     database: 'clothes'
-}, connection /* = mysql.createPool(mysqlLocal);
-connection.on('connection', function(conn) {
-//    connection = conn;
+};
+var connection = mysql.createPool(mysqlLocal);
+connection.on('connection', function (conn) {
     console.log('connected as id ' + conn.threadId);
-})*/;
-data.items.forEach(function (cloth, index) {
-    cloth.price = cloth.price.replace(/\s?руб\.$/i, '');
-    cloth.price = Number(cloth.price.replace(/\s/g, ''));
-    cloth.title = cloth.title.toLocaleLowerCase();
 });
-fs.writeFileSync('zara_treat.json', JSON.stringify(data), { encoding: 'utf8' });
+var api = new db.API(), server = express();
+api.setConnection(connection);
+server.get('/api/items', function (req, res) {
+    var options = _.pick(req.params, ['length', 'type', 'gender', 'start']);
+    api.getItems(function (rows) {
+        res.send(rows);
+    }, options);
+});
+server.listen(3001);
 //# sourceMappingURL=server.js.map

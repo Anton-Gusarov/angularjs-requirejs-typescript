@@ -1,32 +1,31 @@
-/// <reference path='typings/node/node.d.ts' />
-/// <reference path='typings/mongodb/mongodb.d.ts' />
-/// <reference path='typings/mysql/mysql.d.ts' />
-/// <reference path='typings/express/express.d.ts' />
-/// <reference path='typings/express/express-middleware.d.ts' />
+/// <reference path='typings/all.d.ts' />
 
-
+import db = require("db");
 import mysql = require("mysql");
-import fs = require("fs");
-var data = require('zara_treat.json');
+import express = require("express");
+import _ = require("lodash");
 var mysqlLocal = {
     host     : '127.0.0.1',
     user     : 'root',
     password : '',
     database:  'clothes'
-},
-connection = mysql.createPool(mysqlLocal);
+};
+var connection = mysql.createPool(mysqlLocal);
 
 connection.on('connection', function(conn) {
-//    connection = conn;
     console.log('connected as id ' + conn.threadId);
 });
-var insert_prefix = 'INSERT INTO `Items` (title, link, price, image) VALUES',
-    insert_body = [];
-data.items.forEach((cloth, index)=>{
-    insert_body.push(" ('" + cloth.title + "', "
-    + connection.escape(cloth.link) + ", "
-    + cloth.price + ", "
-    + connection.escape(cloth.image) + ")");
+
+var api = new db.API(),
+    server = express();
+
+api.setConnection(connection);
+
+server.get('/api/items', (req: express.Request, res: express.Response)=>{
+    var options = _.pick(req.params, ['length', 'type', 'gender', 'start']);
+
+    api.getItems((rows)=>{
+        res.send(rows);
+    }, options);
 });
-//console.log(insert_prefix + insert_body);
-connection.query(insert_prefix + insert_body.join(', '), (err)=>{if (err) console.log(err)});
+server.listen(3001);
