@@ -2,16 +2,21 @@
 
 requirejs.config({
     paths: {
-        text: 'bower_components/requirejs-text/text',
-        domReady: 'bower_components/requirejs-domready/domReady',
-        angular: 'bower_components/angular/angular',
+        'text': 'bower_components/requirejs-text/text',
+        'domReady': 'bower_components/requirejs-domready/domReady',
+        'angular': 'bower_components/angular/angular',
         //'angular-animate': '../lib/angularjs/angular-animate',
         'angular-route': 'bower_components/angular-route/angular-route',
-        'angular-resource': 'bower_components/angular-resource/angular-resource'
+        'angular-resource': 'bower_components/angular-resource/angular-resource',
+        'jquery': 'bower_components/jquery/dist/jquery',
+        'bootstrap_l': 'bower_components/bootstrap/dist/js/bootstrap'
     },
 
     shim: {
-        angular: {
+        'bootstrap_l': {
+            deps: ['jquery']
+        },
+        'angular': {
             exports: 'angular'
         },
         'angular-animate': {
@@ -30,6 +35,7 @@ requirejs.config({
 
     deps: [
         // kick start application... see bootstrap.js
+        'bootstrap_l',
         './bootstrap'
     ]
 });
