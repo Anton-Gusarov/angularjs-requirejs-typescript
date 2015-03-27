@@ -8,6 +8,7 @@ requirejs.config({
         //'angular-animate': '../lib/angularjs/angular-animate',
         'angular-route': 'bower_components/angular-route/angular-route',
         'angular-resource': 'bower_components/angular-resource/angular-resource',
+        'ngInfiniteScroll': 'bower_components/ngInfiniteScroll/build/ng-infinite-scroll',
         'jquery': 'bower_components/jquery/dist/jquery',
         'bootstrap_l': 'bower_components/bootstrap/dist/js/bootstrap'
     },
@@ -30,6 +31,9 @@ requirejs.config({
         'angular-resource': {
             deps: ['angular'],
             exports: 'angular-resource'
+        },
+        'ngInfiniteScroll': {
+            deps: ['angular']
         }
     },
 

@@ -1,39 +1,16 @@
-<div class="list-group left-menu">
+<!--<div class="list-group left-menu">
     <li class="list-group-item">Цвета</li>
     <li class="list-group-item">Торговые центры</li>
-</div>
-<ul class="thumbnails">
-    <li class="span3">
+</div>-->
+<ul class="thumbnails" infinite-scroll="vm.loadMore()" infinite-scroll-disabled="vm.loading">
+    <li class="span3" ng-repeat="item in items">
         <div class="product-box">
-            <span class="sale_tag"></span>
-            <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware2.jpg" alt="" /></a></p>
-            <a href="product_detail.html" class="title">Ut wisi enim ad</a><br/>
-            <a href="products.html" class="category">Commodo consequat</a>
-            <p class="price">$25.50</p>
+            <p><a
+                    href="#/detail/{{item.id}}"><img ng-src="{{item.image}}" alt="{{item.title}}" /></a></p>
+            <a href="#/detail/{{item.id}}" class="title">{{item.title}}</a><br/>
+            <a href="products.html" class="category">Coats</a>
+            <p class="price">{{item.price | currency}}</p>
         </div>
     </li>
-    <li class="span3">
-        <div class="product-box">
-            <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware1.jpg" alt="" /></a></p>
-            <a href="product_detail.html" class="title">Quis nostrud exerci tation</a><br/>
-            <a href="products.html" class="category">Quis nostrud</a>
-            <p class="price">$17.55</p>
-        </div>
-    </li>
-    <li class="span3">
-        <div class="product-box">
-            <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware6.jpg" alt="" /></a></p>
-            <a href="product_detail.html" class="title">Know exactly turned</a><br/>
-            <a href="products.html" class="category">Quis nostrud</a>
-            <p class="price">$25.30</p>
-        </div>
-    </li>
-    <li class="span3">
-        <div class="product-box">
-            <p><a href="product_detail.html"><img src="themes/images/cloth/bootstrap-women-ware5.jpg" alt="" /></a></p>
-            <a href="product_detail.html" class="title">You think fast</a><br/>
-            <a href="products.html" class="category">World once</a>
-            <p class="price">$25.60</p>
-        </div>
-    </li>
+    <br class="clear"/>
 </ul>

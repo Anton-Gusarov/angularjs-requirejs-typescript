@@ -20,9 +20,13 @@ var api = new db.API(),
     server = express();
 
 api.setConnection(connection);
-
+server.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 server.get('/api/items', (req: express.Request, res: express.Response)=>{
-    var options = _.pick(req.params, ['length', 'type', 'gender', 'start']);
+    var options = _.pick(req.query, ['length', 'type', 'gender', 'start']);
 
     api.getItems((rows)=>{
         res.send(rows);
