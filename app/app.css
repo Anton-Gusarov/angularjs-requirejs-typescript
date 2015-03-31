@@ -82,7 +82,7 @@ img {
   border-bottom: 1px solid #eee;
 }
 
-.product-box:hover {
+.product-box:hover, .product-box.active {
   background-color: #eb4800;
   -webkit-transition: all 0.2s linear;
   -moz-transition: all 0.2s linear;
@@ -92,7 +92,7 @@ img {
   box-shadow: 0px 0px 5px #ccc;
 }
 
-.product-box:hover a {
+.product-box:hover a, .product-box.active a {
   color: #fff !important;
 }
 
@@ -229,4 +229,11 @@ img {
 
 .b-sizes-picker label {
   margin-right: 4px;
+}
+.b-malls__selection {
+
+}
+
+.b-malls__selection.b-malls__selection_mode_admin {
+  height: 200px;
 }

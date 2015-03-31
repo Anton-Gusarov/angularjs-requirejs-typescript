@@ -6,16 +6,29 @@ export interface IItemsList {
     title: string;
     link: string;
     image: string;
+    selected: boolean;
+    malls: number[];
+    colors: number[];
+    sizes: number[];
 }
 
 export class API {
 
     public items: any;
+    public malls: any;
 
     constructor ($resource) {
-        this.items = $resource('http://localhost:3001/api/items', {},
+        this.items = $resource('http://localhost:8081/api/items', {},
             {
                 getItems: {
+                    method: 'GET',
+                    isArray: true,
+                    cache: true
+                }
+            });
+        this.malls = $resource('http://localhost:8081/api/malls', {},
+            {
+                getMalls: {
                     method: 'GET',
                     isArray: true,
                     cache: true

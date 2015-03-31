@@ -1,15 +1,14 @@
 /// <reference path='../../typings/all.d.ts' />
 define(["require", "exports"], function (require, exports) {
     var MainController = (function () {
-        function MainController($scope, API) {
+        function MainController($scope, API, adminMode) {
             this.$scope = $scope;
             this.API = API;
+            this.adminMode = adminMode;
             this.loading = false;
-            /*$scope.items = this.API.items.getItems({
-                length:10
-            });*/
             $scope.items = [];
             $scope.vm = this;
+            $scope.adminMode = this.adminMode;
         }
         MainController.prototype.loadMore = function () {
             var $scope = this.$scope, controller = this;
@@ -22,7 +21,11 @@ define(["require", "exports"], function (require, exports) {
                 controller.loading = false;
             });
         };
-        MainController.$inject = ['$scope', 'API'];
+        MainController.prototype.select = function (index) {
+            var $scope = this.$scope;
+            $scope.items[index].selected = !$scope.items[index].selected;
+        };
+        MainController.$inject = ['$scope', 'API', 'admin'];
         return MainController;
     })();
     exports.MainController = MainController;

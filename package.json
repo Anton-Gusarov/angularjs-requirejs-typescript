@@ -23,8 +23,11 @@
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + sed(/sourceMappingURL=angular-loader.min.js.map/,'sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map','app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
   },
   "dependencies": {
+    "async": "^0.9.0",
     "express": "^4.12.3",
     "lodash": "^3.5.0",
-    "mysql": "^2.5.5"
+    "mysql": "^2.5.5",
+    "node-uuid": "^1.4.3",
+    "request": "^2.54.0"
   }
 }

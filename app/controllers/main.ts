@@ -9,22 +9,21 @@ export interface IMainControllerScope extends ng.IScope {
     $scope: IMainControllerScope;
     vm: MainController;
     loading: boolean;
+    adminMode: boolean;
 
 }
 
 export class MainController {
 
-    public static $inject = ['$scope', 'API'];
+    public static $inject = ['$scope', 'API', 'admin'];
     public loading: boolean = false;
 
-    constructor (private $scope: IMainControllerScope, private API: services.API) {
+    constructor (private $scope: IMainControllerScope, private API: services.API, private adminMode: boolean) {
 
-        /*$scope.items = this.API.items.getItems({
-            length:10
-        });*/
         $scope.items = [];
 
         $scope.vm = this;
+        $scope.adminMode = this.adminMode;
     }
 
     private loadMore () {
@@ -39,6 +38,11 @@ export class MainController {
             $scope.items = $scope.items.concat(data);
             controller.loading = false;
         });
+    }
+
+    public select (index: number) {
+        var $scope = this.$scope;
+        $scope.items[index].selected = !$scope.items[index].selected;
     }
 
 }

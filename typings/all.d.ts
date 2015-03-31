@@ -7,3 +7,6 @@
 /// <reference path='jquery/jquery.d.ts' />
 /// <reference path='angularjs/angular.d.ts' />
 /// <reference path='requirejs/require.d.ts' />
+/// <reference path='node-uuid/node-uuid.d.ts' />
+/// <reference path='request/request.d.ts' />
+/// <reference path='async/async.d.ts' />
