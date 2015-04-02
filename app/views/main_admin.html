@@ -1,8 +1,8 @@
 <sidebar admin="adminMode">
-    <mallsadmin class="list-group-item"></mallsadmin>
+    <mallsadmin class="list-group-item" value="vm.mallsSelected"></mallsadmin>
 
     <li class="list-group-item">
-        <a href class="btn btn-success" ng-click="save()">Сохранить</a>
+        <a href class="btn btn-success" ng-click="vm.save()">Сохранить</a>
     </li>
     <li class="list-group-item">
     <label for="">Цвет</label>
@@ -70,7 +70,7 @@
         </div>
     </li>
 </sidebar>
-<ul class="thumbnails" infinite-scroll="vm.loadMore()" infinite-scroll-disabled="vm.loading">
+<ul class="thumbnails">
     <li class="span3" ng-repeat="item in items">
         <div class="product-box" ng-class="{active:item.selected}">
             <p><a

@@ -2,6 +2,7 @@
 var db = require("db");
 var mysql = require("mysql");
 var express = require("express");
+var bodyParser = require('body-parser');
 var _ = require("lodash");
 var request = require("request");
 var uuid = require('node-uuid');
@@ -20,6 +21,7 @@ connection.on('connection', function (conn) {
 var api = new db.API(), server = express();
 api.setConnection(connection);
 server.use(express.static('app'));
+server.use(bodyParser.json());
 server.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -36,6 +38,17 @@ server.get('/api/items', function (req, res) {
     api.getItems(function (rows) {
         res.send(rows);
     }, options);
+});
+/**
+ * Saves changes to items
+ */
+server.post('/api/items', function (req, res) {
+    var data = req.body;
+    api.saveItems_Malls(data, function () {
+        res.send({
+            "Result": "OK"
+        });
+    });
 });
 /**
  * Gets all mall from database

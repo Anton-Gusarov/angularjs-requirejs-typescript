@@ -17,6 +17,7 @@ export class MainController {
 
     public static $inject = ['$scope', 'API', 'admin'];
     public loading: boolean = false;
+    public mallsSelected = [];
 
     constructor (private $scope: IMainControllerScope, private API: services.API, private adminMode: boolean) {
 
@@ -24,6 +25,10 @@ export class MainController {
 
         $scope.vm = this;
         $scope.adminMode = this.adminMode;
+
+        if (adminMode) {
+            this.loadAll();
+        }
     }
 
     private loadMore () {
@@ -40,9 +45,45 @@ export class MainController {
         });
     }
 
+    public loadAll () {
+        var $scope = this.$scope,
+            controller = this;
+        this.loading = true;
+
+        this.API.items.getItems({
+            length:1000,
+            start: 0
+        }, (data: services.IItemsList)=>{
+            $scope.items = $scope.items.concat(data);
+            controller.loading = false;
+        });
+    }
+
     public select (index: number) {
         var $scope = this.$scope;
         $scope.items[index].selected = !$scope.items[index].selected;
+    }
+
+    public save () {
+        var sentItems = [],
+            model = this,
+            items = this.$scope.items.filter((item)=>{
+                if (item.selected) {
+                    sentItems.push({
+                        id: item.id,
+                        malls: model.mallsSelected
+                    });
+                    return true;
+                }
+                return false;
+            });
+
+        this.API.items.saveItems(sentItems, (result)=>{
+            if (result.Result === 'OK') {
+                model.$scope.$broadcast('items.saved');
+            }
+        });
+
     }
 
 }

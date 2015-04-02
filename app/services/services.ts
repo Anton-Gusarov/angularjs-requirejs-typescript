@@ -24,6 +24,10 @@ export class API {
                     method: 'GET',
                     isArray: true,
                     cache: true
+                },
+
+                saveItems: {
+                    method: 'POST'
                 }
             });
         this.malls = $resource('http://localhost:8081/api/malls', {},

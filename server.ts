@@ -3,6 +3,7 @@
 import db = require("db");
 import mysql = require("mysql");
 import express = require("express");
+import bodyParser = require('body-parser');
 import _ = require("lodash");
 import request = require("request");
 import uuid = require('node-uuid');
@@ -28,6 +29,7 @@ var api = new db.API(),
 
 api.setConnection(connection);
 server.use(express.static('app'));
+server.use(bodyParser.json());
 server.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -47,6 +49,18 @@ server.get('/api/items', (req: express.Request, res: express.Response)=>{
     api.getItems((rows)=>{
         res.send(rows);
     }, options);
+});
+
+/**
+ * Saves changes to items
+ */
+server.post('/api/items', (req: express.Request, res: express.Response)=>{
+    var data = req.body;
+    api.saveItems_Malls(data, ()=>{
+        res.send({
+            "Result": "OK"
+        });
+    });
 });
 
 

@@ -6,9 +6,9 @@ export var mallsAdmin: ng.IDirectiveFactory = ()=>{
         return {
             restrict: 'E',
             //transclude: true,
-            //scope: {
-            //    'close': '&onClose'
-            //},
+            scope: {
+                'value': '='
+            },
             templateUrl: 'views/malls_selector_admin.html',
             controller: 'MallsAdminCtrl'
         }

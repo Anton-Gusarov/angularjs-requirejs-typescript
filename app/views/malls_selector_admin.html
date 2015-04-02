@@ -1,4 +1,6 @@
 <label for="">Торговый центр</label>
-<select class="form-control b-malls__selection b-malls__selection_mode_admin" multiple ng-init="vm.getMalls()">
-    <option value="{{item.Mall_ID}}" ng-repeat="item in malls">{{item.Title}}</option>
+<select class="form-control b-malls__selection b-malls__selection_mode_admin"
+        multiple ng-init="vm.getMalls()"
+        ng-options="item.Title for item in malls track by item.Mall_ID"
+        ng-model="vm.selectedMalls">
 </select>

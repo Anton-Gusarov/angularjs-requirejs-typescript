@@ -7,10 +7,14 @@ export class MallsController {
 
     public static $inject = ['$scope', 'API'];
     public loading: boolean = false;
+    public selectedMalls: Array<any> = [];
 
     constructor (private $scope, private API: services.API) {
         $scope.malls = [];
         $scope.vm = this;
+        $scope.$watch('vm.selectedMalls', (newValue, oldValue)=>{
+            $scope.value = newValue;
+        });
     }
 
     public getMalls () {
