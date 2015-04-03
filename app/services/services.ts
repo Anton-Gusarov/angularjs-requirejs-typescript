@@ -10,6 +10,7 @@ export interface IItemsList {
     malls: number[];
     colors: number[];
     sizes: number[];
+    $index?: number;
 }
 
 export class API {

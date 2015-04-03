@@ -8,6 +8,12 @@ export interface IItemsOptions {
     type?: string;
     gender?: string;
     start?: number;
+    malls?: Array<number>;
+}
+
+export interface IMall {
+    Mall_ID: number;
+    Title: string;
 }
 
 export class API {
@@ -26,13 +32,18 @@ export class API {
     public getItems (callback?: Function, options?: IItemsOptions) {
         var options: IItemsOptions = options || {},
             limit = " LIMIT " + (options.length || this.defaultLength) + " OFFSET " + (options.start || 0),
-            where = [], whereString = "";
+            where = [], whereString = "", joinString = "";
 
-        if (options.type) where.push("type='" + options.type + "'");
-        if (options.gender) where.push("gender='" + options.gender + "'");
+        if (options.type) where.push("Items.type='" + options.type + "'");
+        if (options.gender) where.push("Items.gender='" + options.gender + "'");
+
+        if (options.malls && options.malls.length) {
+            where.push("Items.`id`=rel.`Item_ID` AND rel.`Mall_ID` IN (" + options.malls.join(", ") + ")");
+        }
 
         if (where.length) whereString = " WHERE " + where.join(" AND ");
-        this.connection.query("SELECT * FROM `Items`" + whereString + limit, this.callback.bind(this, callback || (()=>{})));
+
+        this.connection.query("SELECT DISTINCT Items.* FROM `Items`, `ItemsMalls_Relation` AS rel" + whereString + limit, this.callback.bind(this, callback || (()=>{})));
     }
 
     public saveItems_Malls (data, callback?: Function) {

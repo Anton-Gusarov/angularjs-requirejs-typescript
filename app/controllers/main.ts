@@ -18,6 +18,8 @@ export class MainController {
     public static $inject = ['$scope', 'API', 'admin'];
     public loading: boolean = false;
     public mallsSelected = [];
+    private itemsPerPage = 10;
+    public emptyResults = false;
 
     constructor (private $scope: IMainControllerScope, private API: services.API, private adminMode: boolean) {
 
@@ -31,17 +33,43 @@ export class MainController {
         }
     }
 
-    private loadMore () {
+    public changeMall (malls) {
         var $scope = this.$scope,
             controller = this;
+
+        this.getItems({}, (data)=>{
+            $scope.items = data;
+        });
+    }
+
+    private getItems (options, callback?: Function) {
+        var controller = this;
+        if (this.loading) return;
         this.loading = true;
+        options.useFilters = true;
 
         this.API.items.getItems({
-            length:10,
-            start: this.$scope.items.length
-        }, (data: services.IItemsList)=>{
-            $scope.items = $scope.items.concat(data);
+            length: options.length || this.itemsPerPage,
+            start: options.start || 0,
+            malls: this.mallsSelected.length ? this.mallsSelected.map((mall)=>{return mall.Mall_ID}) : []
+        }, (data: services.IItemsList[])=>{
             controller.loading = false;
+            this.emptyResults = !data.length;
+            callback(data);
+        });
+    }
+
+    public loadMore () {
+        var $scope = this.$scope,
+            controller = this;
+
+        if ($scope.items.length > 0 && $scope.items.length < this.itemsPerPage) return;
+        if (this.emptyResults) return;
+
+        this.getItems({
+            start: this.$scope.items.length
+        }, (data)=>{
+            $scope.items = $scope.items.concat(data);
         });
     }
 
@@ -59,9 +87,33 @@ export class MainController {
         });
     }
 
-    public select (index: number) {
-        var $scope = this.$scope;
-        $scope.items[index].selected = !$scope.items[index].selected;
+    public select (item: services.IItemsList, $event) {
+        var siblingSelectedIndex, $index = item.$index, inc = -1;
+        item.selected = !item.selected;
+
+        if ($event.shiftKey) {
+            siblingSelectedIndex = this.closestSelected(item);
+            if (siblingSelectedIndex > $index) inc = 1;
+            for (var i = $index; inc === 1 ? i < siblingSelectedIndex : i > siblingSelectedIndex; i += inc) {
+                this.$scope.items[i].selected = true;
+            }
+        }
+    }
+
+    public closestSelected (item: services.IItemsList): number {
+        var $scope = this.$scope,
+            model = this,
+            items = $scope.items,
+            $index = item.$index, resultIndex, diff = Number.POSITIVE_INFINITY;
+
+        items.forEach((item)=>{
+            if (item.selected && item.$index !== $index && (diff > Math.abs($index - item.$index))) {
+                resultIndex = item.$index;
+                diff = Math.abs($index - resultIndex);
+            }
+        });
+
+        return resultIndex || -1;
     }
 
     public save () {

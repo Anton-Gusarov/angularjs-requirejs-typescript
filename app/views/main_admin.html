@@ -70,11 +70,13 @@
         </div>
     </li>
 </sidebar>
-<ul class="thumbnails">
-    <li class="span3" ng-repeat="item in items">
+<ul class="thumbnails admin-mode">
+    <li class="span3" ng-repeat="item in items" ng-init="item.$index = $index">
         <div class="product-box" ng-class="{active:item.selected}">
             <p><a
-                    href ng-click="vm.select($index)"><img ng-src="{{item.image}}" alt="{{item.title}}" /></a></p>
+                    href
+                    ng-click="vm.select(item, $event)"><img ng-src="{{item.image}}" alt="{{item.title}}" class="thumb"
+                    /></a></p>
             <a href="#/detail/{{item.id}}" class="title">{{item.title}}</a><br/>
             <a href="products.html" class="category">Coats</a>
             <p class="price">{{item.price | currency}}</p>

@@ -7,6 +7,8 @@ define(["require", "exports"], function (require, exports) {
             this.adminMode = adminMode;
             this.loading = false;
             this.mallsSelected = [];
+            this.itemsPerPage = 10;
+            this.emptyResults = false;
             $scope.items = [];
             $scope.vm = this;
             $scope.adminMode = this.adminMode;
@@ -14,15 +16,41 @@ define(["require", "exports"], function (require, exports) {
                 this.loadAll();
             }
         }
+        MainController.prototype.changeMall = function (malls) {
+            var $scope = this.$scope, controller = this;
+            this.getItems({}, function (data) {
+                $scope.items = data;
+            });
+        };
+        MainController.prototype.getItems = function (options, callback) {
+            var _this = this;
+            var controller = this;
+            if (this.loading)
+                return;
+            this.loading = true;
+            options.useFilters = true;
+            this.API.items.getItems({
+                length: options.length || this.itemsPerPage,
+                start: options.start || 0,
+                malls: this.mallsSelected.length ? this.mallsSelected.map(function (mall) {
+                    return mall.Mall_ID;
+                }) : []
+            }, function (data) {
+                controller.loading = false;
+                _this.emptyResults = !data.length;
+                callback(data);
+            });
+        };
         MainController.prototype.loadMore = function () {
             var $scope = this.$scope, controller = this;
-            this.loading = true;
-            this.API.items.getItems({
-                length: 10,
+            if ($scope.items.length > 0 && $scope.items.length < this.itemsPerPage)
+                return;
+            if (this.emptyResults)
+                return;
+            this.getItems({
                 start: this.$scope.items.length
             }, function (data) {
                 $scope.items = $scope.items.concat(data);
-                controller.loading = false;
             });
         };
         MainController.prototype.loadAll = function () {
@@ -36,9 +64,27 @@ define(["require", "exports"], function (require, exports) {
                 controller.loading = false;
             });
         };
-        MainController.prototype.select = function (index) {
-            var $scope = this.$scope;
-            $scope.items[index].selected = !$scope.items[index].selected;
+        MainController.prototype.select = function (item, $event) {
+            var siblingSelectedIndex, $index = item.$index, inc = -1;
+            item.selected = !item.selected;
+            if ($event.shiftKey) {
+                siblingSelectedIndex = this.closestSelected(item);
+                if (siblingSelectedIndex > $index)
+                    inc = 1;
+                for (var i = $index; inc === 1 ? i < siblingSelectedIndex : i > siblingSelectedIndex; i += inc) {
+                    this.$scope.items[i].selected = true;
+                }
+            }
+        };
+        MainController.prototype.closestSelected = function (item) {
+            var $scope = this.$scope, model = this, items = $scope.items, $index = item.$index, resultIndex, diff = Number.POSITIVE_INFINITY;
+            items.forEach(function (item) {
+                if (item.selected && item.$index !== $index && (diff > Math.abs($index - item.$index))) {
+                    resultIndex = item.$index;
+                    diff = Math.abs($index - resultIndex);
+                }
+            });
+            return resultIndex || -1;
         };
         MainController.prototype.save = function () {
             var sentItems = [], model = this, items = this.$scope.items.filter(function (item) {

@@ -177,6 +177,13 @@ img {
   }
 }
 
+.admin-mode .thumb {
+  height: 200px;
+}
+.admin-mode .span3 {
+  width: 170px;
+}
+
 /*@media (max-width: 979px) and (min-width: 768px) {
   [class*="span"] {
     float: left;

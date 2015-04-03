@@ -34,7 +34,10 @@ server.use(function (req, res, next) {
  * Gets a list of cloth items
  */
 server.get('/api/items', function (req, res) {
-    var options = _.pick(req.query, ['length', 'type', 'gender', 'start']);
+    var options = _.pick(req.query, ['length', 'type', 'gender', 'start', 'malls']);
+    if (!(options.malls instanceof Array) && Number(options.malls)) {
+        options.malls = [Number(options.malls)];
+    }
     api.getItems(function (rows) {
         res.send(rows);
     }, options);

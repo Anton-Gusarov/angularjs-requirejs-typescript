@@ -44,7 +44,11 @@ server.use(function(req, res, next) {
  * Gets a list of cloth items
  */
 server.get('/api/items', (req: express.Request, res: express.Response)=>{
-    var options = _.pick(req.query, ['length', 'type', 'gender', 'start']);
+    var options: db.IItemsOptions = _.pick(req.query, ['length', 'type', 'gender', 'start', 'malls']);
+
+    if (!(options.malls instanceof Array) && Number(options.malls)) {
+        options.malls = [Number(options.malls)];
+    }
 
     api.getItems((rows)=>{
         res.send(rows);
