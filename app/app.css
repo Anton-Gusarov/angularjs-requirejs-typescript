@@ -319,3 +319,13 @@ img {
   margin: 10px 10px 0 0;
 
 }
+
+.b-detailed__preview-container {
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.b-detailed__preview {
+  width: 100px;
+  margin-bottom: 5px;
+}
