@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Moscow shopping</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown active">
+          <a href="#/men" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Мужчинам
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header">Категории</li>
+            <li><a href="#">Верхняя одежда</a></li>
+            <li><a href="#">Футболки и поло</a></li>
+            <li><a href="#">Толстовки и олимпийки</a></li>
+            <li><a href="#">Джемперы и кардиганы</a></li>
+            <li><a href="#">Брюки</a></li>
+            <li><a href="#">Рубашки</a></li>
+            <li><a href="#">Джинсы</a></li>
+            <li><a href="#">Пиджаки и костюмы</a></li>
+            <li><a href="#">Шорты</a></li>
+            <li><a href="#">Спортивные костюмы</a></li>
+          </ul>
+        </li>
+        <li><a href="#/women">Женщинам</a></li>
+        <li><a href="#/brands">Бренды</a></li>
+        <!--<li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Nav header</li>
+            <li><a href="#">Separated link</a></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>-->
+      </ul>
+      <!--<ul class="nav navbar-nav navbar-right">
+        <li><a href="../navbar/">Default</a></li>
+        <li><a href="../navbar-static-top/">Static top</a></li>
+        <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+      </ul>-->
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+<div ng-view="" class="ng-scope"><sidebar class="ng-scope"><div class="list-group left-menu" ng-transclude="">
+  <malls class="list-group-item ng-scope ng-isolate-scope" value="vm.mallsSelected" change="vm.changeMall()"><label for="">Торговый центр</label>
+    <select class="form-control b-malls__selection ng-valid ng-dirty ng-touched" ng-init="vm.getMalls()" ng-options="item.Title for item in malls track by item.Mall_ID" ng-model="vm.selectedMalls"><option value="" class="">Все ТЦ</option><option value="1" label="Метрополис">Метрополис</option><option value="2" label="Золотой Вавилон">Золотой Вавилон</option><option value="3" label="Европейский">Европейский</option><option value="4" label="Атриум">Атриум</option><option value="5" label="Афимол">Афимол</option><option value="6" label="Семеновский">Семеновский</option><option value="7" label="XL-3">XL-3</option></select></malls>
+  <li class="list-group-item ng-scope">
+    <label for="">Цвет</label>
+
+    <div class="b-wear-color b-wear-color_size_big">
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="бежевый" style="background:#ffeedd"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="голубой" style="background:#85D6FF"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="желтый" style="background:#FFFF00"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="зеленый" style="background:#009900"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="коричневый" style="background:#663300"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="красный" style="background:#FF0000"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="оранжевый" style="background:#FF6600"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="розовый" style="background:#FF00BB"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="белый" style="background:#FFFFFF"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="серый" style="background:#666666"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="синий" style="background:#3333FF"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="фиолетовый" style="background:#9900CC"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem ">
+        <div class="b-wear-color__item__inner" title="черный" style="background:#000000"></div>
+        <i class="b-wear-color__item__close"></i></div>
+      <div class="b-wear-color__item i-bem b-wear-color__item_color_multi">
+        <div class="b-wear-color__item__inner" title="разноцветный" style=""></div>
+        <i class="b-wear-color__item__close"></i></div>
+    </div>
+  </li>
+  <li class="list-group-item ng-scope">
+    <label for="">Размер</label>
+    <div class="checkbox b-sizes-picker">
+      <label for=""><input type="checkbox" value="44">38</label>
+      <label for=""><input type="checkbox" value="44">40</label>
+      <label for=""><input type="checkbox" value="44">42</label>
+      <label for=""><input type="checkbox" value="44">44</label>
+      <label for=""><input type="checkbox" value="44">46</label>
+      <label for=""><input type="checkbox" value="44">48</label>
+      <label for=""><input type="checkbox" value="44">50</label>
+      <label for=""><input type="checkbox" value="44">52</label>
+      <label for=""><input type="checkbox" value="44">54</label>
+      <label for=""><input type="checkbox" value="44">56</label>
+      <label for=""><input type="checkbox" value="44">58</label>
+      <label for=""><input type="checkbox" value="44">60</label>
+    </div>
+  </li>
+</div></sidebar>
+  <ul class="thumbnails ng-scope ng-isolate-scope" infinite-scroll="vm.loadMore()" infinite-scroll-disabled="vm.loading">
+    <!-- ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849660-d61c-11e4-acf4-61dd087624af.jpg" alt="тренч оранжевого цвета" class="thumb" src="/images/zara-6a849660-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/1" class="title ng-binding">тренч оранжевого цвета</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$8,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849661-d61c-11e4-acf4-61dd087624af.jpg" alt="льняная куртка-бомбер" class="thumb" src="/images/zara-6a849661-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/2" class="title ng-binding">льняная куртка-бомбер</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$3,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849662-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка из нейлона" class="thumb" src="/images/zara-6a849662-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/3" class="title ng-binding">куртка из нейлона</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$2,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="b-detailed">
+      <div class="b-detailed__container">
+        <img alt="куртка-бомбер с перфорацией" class="b-detailed__main-image" src="/images/zara-6a849663-d61c-11e4-acf4-61dd087624af.jpg">
+        <div class="b-detailed__map-container">
+          <div class="b-detailed__map-pills-container">
+            <a href class="b-detailed__map-pill">Схема ТЦ</a>
+            <a href class="b-detailed__map-pill">На карте</a>
+          </div>
+          <div class="b-detailed__map"></div>
+        </div>
+      </div>
+    </div>
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img alt="куртка-бомбер с перфорацией" class="thumb" src="/images/zara-6a849663-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/4" class="title ng-binding">куртка-бомбер с перфорацией</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$4,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849664-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка голубая" class="thumb" src="/images/zara-6a849664-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/5" class="title ng-binding">куртка голубая</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$4,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849665-d61c-11e4-acf4-61dd087624af.jpg" alt="льняная куртка-бомбер" class="thumb" src="/images/zara-6a849665-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/6" class="title ng-binding">льняная куртка-бомбер</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$3,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849666-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка из искусственной замши" class="thumb" src="/images/zara-6a849666-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/7" class="title ng-binding">куртка из искусственной замши</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$4,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849667-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка из нейлона" class="thumb" src="/images/zara-6a849667-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/8" class="title ng-binding">куртка из нейлона</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$2,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849668-d61c-11e4-acf4-61dd087624af.jpg" alt="длинная джинсовая парка" class="thumb" src="/images/zara-6a849668-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/9" class="title ng-binding">длинная джинсовая парка</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$6,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849669-d61c-11e4-acf4-61dd087624af.jpg" alt="джинсовая куртка" class="thumb" src="/images/zara-6a849669-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/10" class="title ng-binding">джинсовая куртка</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$3,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a84966a-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка в байкерском стиле" class="thumb" src="/images/zara-6a84966a-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/11" class="title ng-binding">куртка в байкерском стиле</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$3,499.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a84966b-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка белая из ткани с покрытием" class="thumb" src="/images/zara-6a84966b-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/12" class="title ng-binding">куртка белая из ткани с покрытием</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$4,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a84966c-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка в байкерском стиле" class="thumb" src="/images/zara-6a84966c-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/13" class="title ng-binding">куртка в байкерском стиле</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$3,499.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a84966d-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка в байкерском стиле" class="thumb" src="/images/zara-6a84966d-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/14" class="title ng-binding">куртка в байкерском стиле</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$3,499.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a84966e-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка с перфорацией" class="thumb" src="/images/zara-6a84966e-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/15" class="title ng-binding">куртка с перфорацией</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$4,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a84966f-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка стеганая" class="thumb" src="/images/zara-6a84966f-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/16" class="title ng-binding">куртка стеганая</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$3,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849670-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка из неопрена" class="thumb" src="/images/zara-6a849670-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/17" class="title ng-binding">куртка из неопрена</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$4,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849671-d61c-11e4-acf4-61dd087624af.jpg" alt="двубортный тренч" class="thumb" src="/images/zara-6a849671-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/18" class="title ng-binding">двубортный тренч</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$7,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849672-d61c-11e4-acf4-61dd087624af.jpg" alt="рубашка с принтом" class="thumb" src="/images/zara-6a849672-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/19" class="title ng-binding">рубашка с принтом</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$2,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items --><li class="span3 ng-scope" ng-repeat="item in items" ng-init="item.$index = $index">
+    <div class="product-box" ng-class="{active:item.selected}">
+      <p><a href="" ng-click="vm.select(item)"><img ng-src="/images/zara-6a849673-d61c-11e4-acf4-61dd087624af.jpg" alt="куртка-бомбер с камуфляжным принтом" class="thumb" src="/images/zara-6a849673-d61c-11e4-acf4-61dd087624af.jpg"></a></p>
+      <a href="#/detail/20" class="title ng-binding">куртка-бомбер с камуфляжным принтом</a><br>
+      <a href="#/detail/coats" class="category">Coats</a>
+      <p class="price ng-binding">$4,999.00</p>
+    </div>
+  </li><!-- end ngRepeat: item in items -->
+    <br class="clear">
+  </ul></div>
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+<!--<script src="bower_components/requirejs/require.js" data-main="main"></script>-->
+ <script src="bower_components/jquery/dist/jquery.min.js"></script>
+ <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<!--  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="view1/view1.js"></script>
+  <script src="view2/view2.js"></script>
+  <script src="main/main.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>-->
+</body>
+</html>
