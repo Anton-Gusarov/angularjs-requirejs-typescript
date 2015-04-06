@@ -289,6 +289,10 @@ img {
 
 }
 
+.b-detailed_size-small {
+  width: 550px;
+}
+
 .b-detailed__container {
   display: flex;
   align-items: flex-start;
@@ -299,6 +303,7 @@ img {
   height: 350px;
   width: 420px;
   padding: 0 20px 0 0;
+  display: none;
 }
 
 .b-detailed__map-pills-container {
@@ -328,4 +333,14 @@ img {
 .b-detailed__preview {
   width: 100px;
   margin-bottom: 5px;
+}
+
+.b-detailed__malls-container {
+  width: 100px;
+  margin: 20px 20px 0 0;
+}
+
+.b-detailed__mall {
+  opacity: 0.7;
+  width: 100px;
 }
