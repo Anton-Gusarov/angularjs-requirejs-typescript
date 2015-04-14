@@ -7,6 +7,10 @@ module.exports = function(config) {
             {pattern: 'bower_components/**/*.js', included: false},
             {pattern: 'controllers/**/*.js', included: false},
             {pattern: 'tests/**/*test.js', included: false},
+            {pattern: 'tests/**/*mock.js', included: false},
+            {pattern: 'tests/**/*dummy.json', included: false},
+
+
 
             'tests/require-config.js'
         ]

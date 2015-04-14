@@ -1,9 +1,12 @@
 /// <reference path='../../../typings/all.d.ts' />
 
 export class API {
-    public items: any;
+    public items = new APIItems();
     public malls: any;
 
+    constructor () {
+
+    }
 
 }
 

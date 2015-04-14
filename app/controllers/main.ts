@@ -3,13 +3,13 @@
 import angular = require("angular");
 import services = require("../services/services");
 
-export interface IMainControllerScope extends ng.IScope {
+export interface IMainControllerScope {
 
     items: services.IItems[];
-    $scope: IMainControllerScope;
     vm: MainController;
     loading: boolean;
     adminMode: boolean;
+    $broadcast: Function
 
 }
 
@@ -24,7 +24,7 @@ export class MainController {
     // Necessary for infinite scroll to prevent unwanted requests
     public emptyResults: boolean = false;
 
-    constructor (private $scope: IMainControllerScope, private API: services.API, private adminMode: boolean) {
+    constructor (public $scope: IMainControllerScope, private API: services.API, private adminMode: boolean) {
 
         $scope.items = [];
 

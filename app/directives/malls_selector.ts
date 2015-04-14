@@ -1,5 +1,5 @@
 /// <reference path='../../typings/all.d.ts' />
-/// <amd-dependency path="text!../views/malls_selector_admin.html" />
+/// <amd-dependency path="text!../views/malls_selector.html" />
 
 import angular = require('angular');
 
