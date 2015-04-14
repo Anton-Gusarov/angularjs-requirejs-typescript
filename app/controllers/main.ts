@@ -5,7 +5,7 @@ import services = require("../services/services");
 
 export interface IMainControllerScope extends ng.IScope {
 
-    items: services.IItemsList[];
+    items: services.IItems[];
     $scope: IMainControllerScope;
     vm: MainController;
     loading: boolean;
@@ -13,13 +13,16 @@ export interface IMainControllerScope extends ng.IScope {
 
 }
 
+export interface IGetItemsCallback {(data:services.IItems[]): any}
+
 export class MainController {
 
     public static $inject = ['$scope', 'API', 'admin'];
     public loading: boolean = false;
-    public mallsSelected = [];
+    public mallsSelected: IMall[] = [];
     private itemsPerPage = 10;
-    public emptyResults = false;
+    // Necessary for infinite scroll to prevent unwanted requests
+    public emptyResults: boolean = false;
 
     constructor (private $scope: IMainControllerScope, private API: services.API, private adminMode: boolean) {
 
@@ -33,42 +36,51 @@ export class MainController {
         }
     }
 
-    public changeMall (malls) {
-        var $scope = this.$scope,
-            controller = this;
+    /**
+     * Gets items as the user selects mall. Acquired in main.html.
+     */
+    public changeMall () {
+        var $scope = this.$scope;
 
         this.getItems({}, (data)=>{
             $scope.items = data;
         });
     }
 
-    private getItems (options, callback?: Function) {
+    private getItems (options: IItemsOptions, callback?: IGetItemsCallback) {
         var controller = this;
+        // TODO: make abort of xhr and perform new one
         if (this.loading) return;
         this.loading = true;
-        options.useFilters = true;
 
         this.API.items.getItems({
+
             length: options.length || this.itemsPerPage,
             start: options.start || 0,
             malls: this.mallsSelected.length ? this.mallsSelected.map((mall)=>{return mall.Mall_ID}) : []
-        }, (data: services.IItemsList[])=>{
+
+        }, (data: services.IItems[])=>{
+            // TODO: attach error handling
             controller.loading = false;
             this.emptyResults = !data.length;
-            callback(data);
+            callback && callback(data);
         });
     }
 
+    /**
+     * Loads more Items from the infinite scroll call.
+     */
     public loadMore () {
-        var $scope = this.$scope,
-            controller = this;
+        var $scope = this.$scope;
 
+        // Prevent infinite scroll to make xhr calls when the amount of an items is too small
         if ($scope.items.length > 0 && $scope.items.length < this.itemsPerPage) return;
+        // Same prevention but when the last result of getItems is empty
         if (this.emptyResults) return;
 
         this.getItems({
             start: this.$scope.items.length
-        }, (data)=>{
+        }, (data: services.IItems[])=>{
             $scope.items = $scope.items.concat(data);
         });
     }
@@ -81,13 +93,20 @@ export class MainController {
         this.API.items.getItems({
             length:1000,
             start: 0
-        }, (data: services.IItemsList)=>{
+        }, (data: services.IItems)=>{
             $scope.items = $scope.items.concat(data);
             controller.loading = false;
         });
     }
 
-    public select (item: services.IItemsList, $event) {
+    /**
+     * Items can be selected in admin mode for edition purposes.
+     * With shift key items are selected within the interval for the multiple edition.
+     * Used in main.html
+     * @param item
+     * @param $event
+     */
+    public select (item: services.IItems, $event) {
         var siblingSelectedIndex, $index = item.$index, inc = -1;
         item.selected = !item.selected;
 
@@ -100,11 +119,15 @@ export class MainController {
         }
     }
 
-    public closestSelected (item: services.IItemsList): number {
+    /**
+     * Finds closest selected Item to the passed one. Necessary to estimate an interval for a multiple selection.
+     * @param item
+     * @returns {number}
+     */
+    public closestSelected (item: services.IItems): number {
         var $scope = this.$scope,
-            model = this,
             items = $scope.items,
-            $index = item.$index, resultIndex, diff = Number.POSITIVE_INFINITY;
+            $index = item.$index, resultIndex: number = -1, diff = Number.POSITIVE_INFINITY;
 
         items.forEach((item)=>{
             if (item.selected && item.$index !== $index && (diff > Math.abs($index - item.$index))) {
@@ -113,9 +136,12 @@ export class MainController {
             }
         });
 
-        return resultIndex || -1;
+        return resultIndex;
     }
 
+    /**
+     * Saves selected Items. For now it saves chosen malls only.
+     */
     public save () {
         var sentItems = [],
             model = this,

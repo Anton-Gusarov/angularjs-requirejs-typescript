@@ -5,7 +5,7 @@ import services = require("../services/services");
 
 export interface ISidebarControllerScope extends ng.IScope {
 
-    items: services.IItemsList[];
+    items: services.IItems[];
     $scope: ISidebarControllerScope;
     vm: SidebarController;
     loading: boolean;
@@ -18,8 +18,6 @@ export class SidebarController {
     public loading: boolean = false;
 
     constructor (private $scope: ISidebarControllerScope, private API: services.API, private $routeProvider) {
-        $scope.items = [];
-        $scope.vm = this;
     }
 
 }

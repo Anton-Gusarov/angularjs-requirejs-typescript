@@ -7,14 +7,15 @@ export class MallsController {
 
     public static $inject = ['$scope', 'API', '$timeout'];
     public loading: boolean = false;
-    public selectedMalls: Array<any> = [];
+    public selectedMalls: Array<IMall> = [];
 
-    constructor (private $scope, private API: services.API, $timeout) {
+    constructor (private $scope, private API: services.API, $timeout: ng.ITimeoutService) {
         $scope.malls = [];
         $scope.vm = this;
         $scope.$watchCollection('vm.selectedMalls', (newValue, oldValue)=>{
             if (newValue === oldValue) { return; }
             $scope.value = newValue ? (newValue instanceof Array ? newValue : [newValue]) : [];
+            // Calls change attribute of the directive Malls
             $timeout($scope.change.bind($scope), 0);
         }, true);
     }
@@ -22,6 +23,7 @@ export class MallsController {
     public getMalls () {
         var $scope = this.$scope,
             controller = this;
+        //TODO: make abort of the previous xhr and start the new one
         this.loading = true;
 
         this.API.malls.getMalls({}, (data)=>{

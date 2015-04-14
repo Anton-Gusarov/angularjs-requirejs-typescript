@@ -44,7 +44,7 @@ server.use(function(req, res, next) {
  * Gets a list of cloth items
  */
 server.get('/api/items', (req: express.Request, res: express.Response)=>{
-    var options: db.IItemsOptions = _.pick(req.query, ['length', 'type', 'gender', 'start', 'malls']);
+    var options: IItemsOptions = _.pick(req.query, ['length', 'type', 'gender', 'start', 'malls']);
 
     if (!(options.malls instanceof Array) && Number(options.malls)) {
         options.malls = [Number(options.malls)];
@@ -78,6 +78,10 @@ server.get('/api/malls', (req: express.Request, res: express.Response)=>{
         res.send(rows);
     }, options);
 });
+
+/**
+ * Downloading images from remote
+ */
 interface IDownloadItem {
     url:string;
     to:string;

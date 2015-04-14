@@ -1,5 +1,18 @@
 <sidebar>
     <malls class="list-group-item" value="vm.mallsSelected" change="vm.changeMall()"></malls>
+    <li class="list-group-item b-price">
+        <label for="">Цена</label>
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="sr-only" for="priceFrom">От:</label>
+                <input type="text" class="form-control b-price__input" id="priceFrom" placeholder="От:">
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="priceTo">До:</label>
+                <input type="text" class="form-control b-price__input" id="priceTo" placeholder="До:">
+            </div>
+        </form>
+    </li>
     <li class="list-group-item">
         <label for="">Цвет</label>
 

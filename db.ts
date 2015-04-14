@@ -3,23 +3,10 @@
 import mysql = require("mysql");
 import _ = require("lodash");
 
-export interface IItemsOptions {
-    length?: number;
-    type?: string;
-    gender?: string;
-    start?: number;
-    malls?: Array<number>;
-}
-
-export interface IMall {
-    Mall_ID: number;
-    Title: string;
-}
-
 export class API {
 
     public connection: mysql.IPool;
-    private defaultLength = 30;
+    private defaultItemsLength = 30;
 
     constructor () {
 
@@ -31,8 +18,8 @@ export class API {
 
     public getItems (callback?: Function, options?: IItemsOptions) {
         var options: IItemsOptions = options || {},
-            limit = " LIMIT " + (options.length || this.defaultLength) + " OFFSET " + (options.start || 0),
-            where = [], whereString = "", joinString = "";
+            limit = " LIMIT " + (options.length || this.defaultItemsLength) + " OFFSET " + (options.start || 0),
+            where: string[] = [], whereString = "", joinString = "";
 
         if (options.type) where.push("Items.type='" + options.type + "'");
         if (options.gender) where.push("Items.gender='" + options.gender + "'");
@@ -85,6 +72,12 @@ export class API {
 
         callback(row);
     }
+
+    /**
+     * Designed for saturating the database by a data
+     * @param data
+     * @param callback
+     */
 
     public saturateTemp (data: Array<any>, callback) {
         var query = "INSERT INTO Items_t (id, image) VALUES ",

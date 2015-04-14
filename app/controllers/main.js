@@ -8,6 +8,7 @@ define(["require", "exports"], function (require, exports) {
             this.loading = false;
             this.mallsSelected = [];
             this.itemsPerPage = 10;
+            // Necessary for infinite scroll to prevent unwanted requests
             this.emptyResults = false;
             $scope.items = [];
             $scope.vm = this;
@@ -16,8 +17,11 @@ define(["require", "exports"], function (require, exports) {
                 this.loadAll();
             }
         }
-        MainController.prototype.changeMall = function (malls) {
-            var $scope = this.$scope, controller = this;
+        /**
+         * Gets items as the user selects mall. Acquired in main.html.
+         */
+        MainController.prototype.changeMall = function () {
+            var $scope = this.$scope;
             this.getItems({}, function (data) {
                 $scope.items = data;
             });
@@ -25,10 +29,10 @@ define(["require", "exports"], function (require, exports) {
         MainController.prototype.getItems = function (options, callback) {
             var _this = this;
             var controller = this;
+            // TODO: make abort of xhr and perform new one
             if (this.loading)
                 return;
             this.loading = true;
-            options.useFilters = true;
             this.API.items.getItems({
                 length: options.length || this.itemsPerPage,
                 start: options.start || 0,
@@ -36,15 +40,21 @@ define(["require", "exports"], function (require, exports) {
                     return mall.Mall_ID;
                 }) : []
             }, function (data) {
+                // TODO: attach error handling
                 controller.loading = false;
                 _this.emptyResults = !data.length;
-                callback(data);
+                callback && callback(data);
             });
         };
+        /**
+         * Loads more Items from the infinite scroll call.
+         */
         MainController.prototype.loadMore = function () {
-            var $scope = this.$scope, controller = this;
+            var $scope = this.$scope;
+            // Prevent infinite scroll to make xhr calls when the amount of an items is too small
             if ($scope.items.length > 0 && $scope.items.length < this.itemsPerPage)
                 return;
+            // Same prevention but when the last result of getItems is empty
             if (this.emptyResults)
                 return;
             this.getItems({
@@ -64,6 +74,13 @@ define(["require", "exports"], function (require, exports) {
                 controller.loading = false;
             });
         };
+        /**
+         * Items can be selected in admin mode for edition purposes.
+         * With shift key items are selected within the interval for the multiple edition.
+         * Used in main.html
+         * @param item
+         * @param $event
+         */
         MainController.prototype.select = function (item, $event) {
             var siblingSelectedIndex, $index = item.$index, inc = -1;
             item.selected = !item.selected;
@@ -76,16 +93,24 @@ define(["require", "exports"], function (require, exports) {
                 }
             }
         };
+        /**
+         * Finds closest selected Item to the passed one. Necessary to estimate an interval for a multiple selection.
+         * @param item
+         * @returns {number}
+         */
         MainController.prototype.closestSelected = function (item) {
-            var $scope = this.$scope, model = this, items = $scope.items, $index = item.$index, resultIndex, diff = Number.POSITIVE_INFINITY;
+            var $scope = this.$scope, items = $scope.items, $index = item.$index, resultIndex = -1, diff = Number.POSITIVE_INFINITY;
             items.forEach(function (item) {
                 if (item.selected && item.$index !== $index && (diff > Math.abs($index - item.$index))) {
                     resultIndex = item.$index;
                     diff = Math.abs($index - resultIndex);
                 }
             });
-            return resultIndex || -1;
+            return resultIndex;
         };
+        /**
+         * Saves selected Items. For now it saves chosen malls only.
+         */
         MainController.prototype.save = function () {
             var sentItems = [], model = this, items = this.$scope.items.filter(function (item) {
                 if (item.selected) {

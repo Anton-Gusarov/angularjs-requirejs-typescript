@@ -1,7 +1,9 @@
 /// <reference path='../../typings/all.d.ts' />
 import angular = require("angular");
 
-export interface IItemsList {
+var apiURL = 'http://localhost:8081/api';
+
+export interface IItems {
     id: number;
     title: string;
     link: string;
@@ -19,7 +21,7 @@ export class API {
     public malls: any;
 
     constructor ($resource) {
-        this.items = $resource('http://localhost:8081/api/items', {},
+        this.items = $resource(apiURL + '/items', {},
             {
                 getItems: {
                     method: 'GET',
@@ -31,7 +33,7 @@ export class API {
                     method: 'POST'
                 }
             });
-        this.malls = $resource('http://localhost:8081/api/malls', {},
+        this.malls = $resource(apiURL + '/malls', {},
             {
                 getMalls: {
                     method: 'GET',

@@ -4,17 +4,17 @@
 
 describe('my app', function() {
 
-  browser.get('index.html');
+  browser.get('/');
 
   it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-    expect(browser.getLocationAbsUrl()).toMatch("/view1");
+    expect(browser.getLocationAbsUrl()).toMatch("/");
   });
 
 
-  describe('view1', function() {
+  /*describe('view1', function() {
 
     beforeEach(function() {
-      browser.get('index.html#/view1');
+      browser.get('index.html#/men');
     });
 
 
@@ -38,5 +38,5 @@ describe('my app', function() {
         toMatch(/partial for view 2/);
     });
 
-  });
+  });*/
 });

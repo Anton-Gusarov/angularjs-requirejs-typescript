@@ -1,6 +1,5 @@
 /* app css stylesheet */
 body {
-  min-height: 2000px;
   padding-top: 70px;
 }
 .menu {
@@ -274,6 +273,10 @@ img {
   height: 200px;
 }
 
+.b-price .b-price__input {
+  width: 90px;
+}
+
 .b-detailed {
   position: absolute;
   top: -20px;
@@ -282,11 +285,17 @@ img {
   width: 850px;
   height: 510px;
   background: #ffffff;
+  overflow: hidden;
 
   -webkit-box-shadow: 0px 0px 39px -5px rgba(15,15,15,0.74);
   -moz-box-shadow: 0px 0px 39px -5px rgba(15,15,15,0.74);
   box-shadow: 0px 0px 39px -5px rgba(15,15,15,0.74);
 
+  -webkit-transition: width .5s ease-in;
+  -moz-transition: width .5s ease-in;
+  -ms-transition: width .5s ease-in;
+  -o-transition: width .5s ease-in;
+  transition: width .5s ease-in;
 }
 
 .b-detailed_size-small {
@@ -297,6 +306,11 @@ img {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  width: 850px;
+}
+
+.b-detailed_size-small .b-detailed__container {
+  width: 550px;
 }
 
 .b-detailed__map-container {
@@ -322,7 +336,6 @@ img {
 }
 .b-detailed__map-pill {
   margin: 10px 10px 0 0;
-
 }
 
 .b-detailed__preview-container {
@@ -343,4 +356,47 @@ img {
 .b-detailed__mall {
   opacity: 0.7;
   width: 100px;
+}
+
+
+.b-brands {
+  position: fixed;
+  top: 70px;
+  left: 310px;
+  z-index: 100;
+  width: 450px;
+  height: 422px;
+  background: #ffffff;
+  overflow: hidden;
+
+  -webkit-box-shadow: 0px 0px 39px -5px rgba(15,15,15,0.74);
+  -moz-box-shadow: 0px 0px 39px -5px rgba(15,15,15,0.74);
+  box-shadow: 0px 0px 39px -5px rgba(15,15,15,0.74);
+
+  -webkit-transition: width .5s ease-in;
+  -moz-transition: width .5s ease-in;
+  -ms-transition: width .5s ease-in;
+  -o-transition: width .5s ease-in;
+  transition: width .5s ease-in;
+}
+
+.b-brands__container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  width: 450px;
+  padding: 20px;
+}
+
+.b-brands__brand {
+  width: 100px;
+  margin-right: 3px;
+  opacity: 0.5;
+}
+
+.b-brands .b-brands__brand:hover {
+  opacity: 1;
+  border-color: darksalmon;
 }

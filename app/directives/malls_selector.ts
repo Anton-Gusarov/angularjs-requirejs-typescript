@@ -11,6 +11,7 @@ export var malls: ng.IDirectiveFactory = ()=>{
                 'change': '&'
             },
             templateUrl: 'views/malls_selector.html',
-            controller: 'MallsAdminCtrl'
+            // Same controller for the two directives which do the same thing but appear differently.
+            controller: 'controllers.malls-admin'
         }
 };

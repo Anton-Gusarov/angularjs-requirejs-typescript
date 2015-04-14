@@ -10,6 +10,7 @@ export var mallsAdmin: ng.IDirectiveFactory = ()=>{
                 'value': '='
             },
             templateUrl: 'views/malls_selector_admin.html',
-            controller: 'MallsAdminCtrl'
+            // Same controller for the two directives which do the same thing but appear differently.
+            controller: 'controllers.malls-admin'
         }
 };
