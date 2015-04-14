@@ -1,0 +1,1 @@
+{"version":3,"file":"malls_selector_admin.js","sourceRoot":"","sources":["malls_selector_admin.ts"],"names":[],"mappings":"AAAA,+CAA+C;AAC/C,qEAAqE;;IAIrE,IAAI,QAAQ,GAAG,OAAO,CAAC,yCAAyC,CAAC,CAAC;IAEvD,kBAAU,GAAyB;QACtC,MAAM,CAAC;YACH,QAAQ,EAAE,GAAG;YACb,KAAK,EAAE;gBACH,OAAO,EAAE,GAAG;aACf;YACD,QAAQ,EAAE,QAAQ;YAElB,AADA,yFAAyF;YACzF,UAAU,EAAE,yBAAyB;SACxC,CAAA;IACT,CAAC,CAAC"}
