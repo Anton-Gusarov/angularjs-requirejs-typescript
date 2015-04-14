@@ -10,4 +10,5 @@
 /// <reference path='node-uuid/node-uuid.d.ts' />
 /// <reference path='request/request.d.ts' />
 /// <reference path='async/async.d.ts' />
+/// <reference path='karma-jasmine/karma-jasmine.d.ts' />
 /// <reference path='./interfaces' />
