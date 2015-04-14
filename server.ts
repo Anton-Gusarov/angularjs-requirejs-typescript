@@ -1,11 +1,11 @@
 /// <reference path='typings/all.d.ts' />
 
-import db = require("db");
-import mysql = require("mysql");
-import express = require("express");
+import db = require('db');
+import mysql = require('mysql');
+import express = require('express');
 import bodyParser = require('body-parser');
-import _ = require("lodash");
-import request = require("request");
+import _ = require('lodash');
+import request = require('request');
 import uuid = require('node-uuid');
 import fs = require('fs');
 import async = require('async');
@@ -17,8 +17,9 @@ var mysqlLocal = {
     database:  'clothes'
 },
     mysqlHerokuUrl = 'mysql://b32d76e00ac63c:0f3c1af0@us-cdbr-iron-east-02.cleardb.net/heroku_999172673e027c4?reconnect=true',
-    env = process.argv[process.argv.length - 1] === "--production" ? "production" : "development";
-var connection = mysql.createPool(env === "production" ? mysqlHerokuUrl : mysqlLocal);
+    env = process.argv[process.argv.length - 1] === '--production' ? 'production' : 'development';
+
+var connection = mysql.createPool(env === 'production' ? mysqlHerokuUrl : mysqlLocal);
 
 connection.on('connection', function(conn) {
     console.log('connected as id ' + conn.threadId);
@@ -31,10 +32,13 @@ api.setConnection(connection);
 server.use(express.static('app'));
 server.use(bodyParser.json());
 server.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
+
+
+
 /**
  * API methods
  */
@@ -62,7 +66,7 @@ server.post('/api/items', (req: express.Request, res: express.Response)=>{
     var data = req.body;
     api.saveItems_Malls(data, ()=>{
         res.send({
-            "Result": "OK"
+            'Result': 'OK'
         });
     });
 });
@@ -102,7 +106,7 @@ server.get('/api/get_images', (req: express.Request, res: express.Response)=>{
     api.getItems((rows)=>{
 
         rows.forEach((item)=>{
-            var filename = "zara-" + uuid.v1() + '.jpg';
+            var filename = 'zara-' + uuid.v1() + '.jpg';
 
             imagesToDownload.push({
                 url: item.image_remote,

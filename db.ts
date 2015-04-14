@@ -1,12 +1,12 @@
 /// <reference path='typings/all.d.ts' />
 
-import mysql = require("mysql");
-import _ = require("lodash");
+import mysql = require('mysql');
+import _ = require('lodash');
 
 export class API {
 
     public connection: mysql.IPool;
-    private defaultItemsLength = 30;
+    private defaultItemsLength = 10;
 
     constructor () {
 
@@ -19,7 +19,7 @@ export class API {
     public getItems (callback?: Function, options?: IItemsOptions) {
         var options: IItemsOptions = options || {},
             limit = " LIMIT " + (options.length || this.defaultItemsLength) + " OFFSET " + (options.start || 0),
-            where: string[] = [], whereString = "", joinString = "";
+            where: string[] = [], whereString = '', joinString = '';
 
         if (options.type) where.push("Items.type='" + options.type + "'");
         if (options.gender) where.push("Items.gender='" + options.gender + "'");

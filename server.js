@@ -1,10 +1,10 @@
 /// <reference path='typings/all.d.ts' />
-var db = require("db");
-var mysql = require("mysql");
-var express = require("express");
+var db = require('db');
+var mysql = require('mysql');
+var express = require('express');
 var bodyParser = require('body-parser');
-var _ = require("lodash");
-var request = require("request");
+var _ = require('lodash');
+var request = require('request');
 var uuid = require('node-uuid');
 var fs = require('fs');
 var async = require('async');
@@ -13,8 +13,8 @@ var mysqlLocal = {
     user: 'root',
     password: '',
     database: 'clothes'
-}, mysqlHerokuUrl = 'mysql://b32d76e00ac63c:0f3c1af0@us-cdbr-iron-east-02.cleardb.net/heroku_999172673e027c4?reconnect=true', env = process.argv[process.argv.length - 1] === "--production" ? "production" : "development";
-var connection = mysql.createPool(env === "production" ? mysqlHerokuUrl : mysqlLocal);
+}, mysqlHerokuUrl = 'mysql://b32d76e00ac63c:0f3c1af0@us-cdbr-iron-east-02.cleardb.net/heroku_999172673e027c4?reconnect=true', env = process.argv[process.argv.length - 1] === '--production' ? 'production' : 'development';
+var connection = mysql.createPool(env === 'production' ? mysqlHerokuUrl : mysqlLocal);
 connection.on('connection', function (conn) {
     console.log('connected as id ' + conn.threadId);
 });
@@ -23,8 +23,8 @@ api.setConnection(connection);
 server.use(express.static('app'));
 server.use(bodyParser.json());
 server.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
 /**
@@ -49,7 +49,7 @@ server.post('/api/items', function (req, res) {
     var data = req.body;
     api.saveItems_Malls(data, function () {
         res.send({
-            "Result": "OK"
+            'Result': 'OK'
         });
     });
 });
@@ -73,7 +73,7 @@ server.get('/api/get_images', function (req, res) {
     };
     api.getItems(function (rows) {
         rows.forEach(function (item) {
-            var filename = "zara-" + uuid.v1() + '.jpg';
+            var filename = 'zara-' + uuid.v1() + '.jpg';
             imagesToDownload.push({
                 url: item.image_remote,
                 to: '/images/' + filename,
