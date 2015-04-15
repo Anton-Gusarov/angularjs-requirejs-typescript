@@ -128,3 +128,4 @@ server.get('/api/get_images', (req: express.Request, res: express.Response)=>{
 });
 
 server.listen(process.env.PORT || 8081);
+console.log('Listening on port ' + (process.env.PORT || 8081));
