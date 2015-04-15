@@ -1,7 +1,9 @@
 define(["require", "exports", 'angular'], function (require, exports, angular) {
-    var apiURL = 'http://localhost:8081/api';
+    var apiURL;
     var API = (function () {
-        function API($resource) {
+        function API($resource, $location) {
+            var l = $location;
+            apiURL = l.protocol() + '://' + l.host() + (l.port() ? ':' + l.port() : '') + '/api';
             this.items = $resource(apiURL + '/items', {}, {
                 getItems: {
                     method: 'GET',
@@ -23,6 +25,6 @@ define(["require", "exports", 'angular'], function (require, exports, angular) {
         return API;
     })();
     exports.API = API;
-    exports.services = angular.module('services', ['ngResource']).service('API', API);
+    exports.services = angular.module('services', ['ngResource', '$location']).service('API', API);
 });
 //# sourceMappingURL=services.js.map
