@@ -7,3 +7,9 @@ This repositoty provides the template for any application.
 
   - Production version
   - Protractor tests
+
+# Start
+
+```sh
+node server.js --production
+```
