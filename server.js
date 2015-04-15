@@ -87,5 +87,5 @@ server.get('/api/get_images', function (req, res) {
         });
     }, options);
 });
-server.listen(8081);
+server.listen(process.env.PORT || 8081);
 //# sourceMappingURL=server.js.map
