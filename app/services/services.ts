@@ -20,6 +20,8 @@ export class API {
     public items: any;
     public malls: any;
 
+    public $inject = ['$resource', '$location'];
+
     constructor ($resource, $location) {
         var l = $location;
         apiURL = l.protocol() + '://' + l.host() + (l.port() ? ':' + l.port() : '') + '/api';
@@ -48,5 +50,5 @@ export class API {
 
 }
 
-export var services = angular.module('services', ['ngResource', '$location'])
+export var services = angular.module('services', ['ngResource'])
     .service('API', API);

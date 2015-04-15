@@ -2,6 +2,7 @@ define(["require", "exports", 'angular'], function (require, exports, angular) {
     var apiURL;
     var API = (function () {
         function API($resource, $location) {
+            this.$inject = ['$resource', '$location'];
             var l = $location;
             apiURL = l.protocol() + '://' + l.host() + (l.port() ? ':' + l.port() : '') + '/api';
             this.items = $resource(apiURL + '/items', {}, {
@@ -25,6 +26,6 @@ define(["require", "exports", 'angular'], function (require, exports, angular) {
         return API;
     })();
     exports.API = API;
-    exports.services = angular.module('services', ['ngResource', '$location']).service('API', API);
+    exports.services = angular.module('services', ['ngResource']).service('API', API);
 });
 //# sourceMappingURL=services.js.map
