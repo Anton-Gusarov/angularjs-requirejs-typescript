@@ -1,6 +1,6 @@
 /// <reference path='typings/all.d.ts' />
 
-import db = require('db');
+import db = require('./db');
 import mysql = require('mysql');
 import express = require('express');
 import bodyParser = require('body-parser');

@@ -1,5 +1,5 @@
 /// <reference path='typings/all.d.ts' />
-var db = require('db');
+var db = require('./db');
 var mysql = require('mysql');
 var express = require('express');
 var bodyParser = require('body-parser');
