@@ -1,4 +1,4 @@
-<li class="span3" ng-click="select({item: item})">
+<li class="span3" ng-click="select({item: item, $event: $event})">
     <div class="product-box" ng-class="{active:item.selected}">
         <p><a
                 href><img ng-src="{{item.image_remote}}" alt="{{item.title}}" class="thumb" /></a></p>

@@ -81,6 +81,6 @@
 </sidebar>
 <ul class="thumbnails" infinite-scroll="vm.loadMore()" infinite-scroll-disabled="vm.loading">
     <product ng-repeat="item in items" ng-init="item.$index = $index" item="item"
-             select="vm.select(item)"></product>
+             select="vm.selectItem(item)" detailed="item.detailedInfo"></product>
     <br class="clear"/>
 </ul>

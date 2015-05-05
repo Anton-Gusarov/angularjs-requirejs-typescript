@@ -9,7 +9,7 @@ export interface IMainControllerScope {
     vm: MainController;
     loading: boolean;
     adminMode: boolean;
-    $broadcast: Function
+    $broadcast: Function;
 
 }
 
@@ -24,6 +24,8 @@ export class MainController {
     // Necessary for infinite scroll to prevent unwanted requests
     public emptyResults: boolean = false;
 
+    public selectItem: (item: services.IItems, $event: any)=>void;
+
     constructor (public $scope: IMainControllerScope, private API: services.API, private adminMode: boolean) {
 
         $scope.items = [];
@@ -34,6 +36,8 @@ export class MainController {
         if (adminMode) {
             this.loadAll();
         }
+
+        $scope.vm.selectItem = adminMode ? this.select : this.showDetailed;
     }
 
     /**
@@ -119,6 +123,12 @@ export class MainController {
         }
     }
 
+    public showDetailed (item: services.IItems, $event) {
+
+        item.detailedInfo = !item.detailedInfo;
+
+    }
+
     /**
      * Finds closest selected Item to the passed one. Necessary to estimate an interval for a multiple selection.
      * @param item
@@ -158,7 +168,7 @@ export class MainController {
 
         this.API.items.saveItems(sentItems, (result)=>{
             if (result.Result === 'OK') {
-                model.$scope.$broadcast('items.saved');
+                model.$scope.$broadcast('items:saved');
             }
         });
 

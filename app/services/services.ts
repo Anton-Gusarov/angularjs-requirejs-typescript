@@ -9,6 +9,7 @@ export interface IItems {
     link: string;
     image: string;
     selected: boolean;
+    detailedInfo: boolean;
     malls: number[];
     colors: number[];
     sizes: number[];

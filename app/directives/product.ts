@@ -9,12 +9,13 @@ export class ProductController {
 
     constructor (public $scope, public $element, public $attrs, $transclude) {
 
-
+        $scope.$watch($scope.detailed, this.showDetailed.bind(this));
 
     }
 
-    public showDetailed () {
-        this.$scope.$emit('detailed:show');
+    public showDetailed (newValue, oldValue) {
+        if (newValue === oldValue) { return; }
+        this.$scope.$emit('detailed:' + (newValue ? 'show' : 'hide'));
     }
 
 }
@@ -24,17 +25,23 @@ export var product: ng.IDirectiveFactory = ($compile)=>{
             restrict: 'E',
             transclude: true,
             scope: {
-                'item': '='
+                'item': '=',
+                'detailed': '@',
+                'select': '&'
             },
             replace: true,
             template: template,
             controller: ProductController,
             link: (scope, iElement, iAttrs, controller)=>{
-                scope.$on('detailed:show', ()=>{
-                    var detailed = angular.element('<product-detailed></product-detailed>');
-                    $compile(detailed.contents())(scope);
-                    iElement.prepend(detailed);
-                });
+                var detailed = angular.element('<product-detailed></product-detailed>');
+                scope
+                    .$on('detailed:show', ()=>{
+                        $compile(detailed)(scope);
+                        iElement.prepend(detailed);
+                    });
+                scope.$on('detailed:hide', ()=>{
+                        detailed.remove();
+                    });
             }
         }
 };

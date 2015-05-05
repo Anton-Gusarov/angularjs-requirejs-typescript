@@ -148,7 +148,7 @@ img {
 .b-detailed__main-image {
 }
 
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {
 
   .thumbnails>li {
     float: none;
@@ -186,7 +186,7 @@ img {
   .product-box:hover a {
     color: #333 !important;
   }
-}
+}*/
 
 @media (min-width: 1200px) {
   .thumbnails {

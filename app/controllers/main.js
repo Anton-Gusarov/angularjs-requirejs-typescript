@@ -16,6 +16,7 @@ define(["require", "exports"], function (require, exports) {
             if (adminMode) {
                 this.loadAll();
             }
+            $scope.vm.selectItem = adminMode ? this.select : this.showDetailed;
         }
         /**
          * Gets items as the user selects mall. Acquired in main.html.
@@ -93,6 +94,9 @@ define(["require", "exports"], function (require, exports) {
                 }
             }
         };
+        MainController.prototype.showDetailed = function (item, $event) {
+            item.detailedInfo = !item.detailedInfo;
+        };
         /**
          * Finds closest selected Item to the passed one. Necessary to estimate an interval for a multiple selection.
          * @param item
@@ -124,7 +128,7 @@ define(["require", "exports"], function (require, exports) {
             });
             this.API.items.saveItems(sentItems, function (result) {
                 if (result.Result === 'OK') {
-                    model.$scope.$broadcast('items.saved');
+                    model.$scope.$broadcast('items:saved');
                 }
             });
         };
