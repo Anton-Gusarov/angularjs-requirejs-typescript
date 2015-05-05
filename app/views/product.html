@@ -1,0 +1,9 @@
+<li class="span3" ng-click="select({item: item})">
+    <div class="product-box" ng-class="{active:item.selected}">
+        <p><a
+                href><img ng-src="{{item.image_remote}}" alt="{{item.title}}" class="thumb" /></a></p>
+        <a href="#/detail/{{item.id}}" class="title">{{item.title}}</a><br/>
+        <a href="#/detail/{{item.type}}" class="category">Coats</a>
+        <p class="price">{{item.price | currency}}</p>
+    </div>
+</li>
