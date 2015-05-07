@@ -19,7 +19,8 @@ require.config({
     // example of using shim, to load non AMD libraries (such as underscore and jquery)
     paths: {
         'angular': 'bower_components/angular/angular',
-        'text': 'bower_components/requirejs-text/text'
+        'text': 'bower_components/requirejs-text/text',
+        '_': 'bower_components/underscore/underscore-min'
     },
 
     shim: {

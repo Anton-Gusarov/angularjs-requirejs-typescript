@@ -26,7 +26,7 @@ export class MainController {
 
     public selectItem: (item: services.IItems, $event: any)=>void;
 
-    constructor (public $scope: IMainControllerScope, private API: services.API, private adminMode: boolean) {
+    constructor (public $scope: IMainControllerScope, public API: services.IAPI, private adminMode: boolean) {
 
         $scope.items = [];
 
@@ -51,7 +51,7 @@ export class MainController {
         });
     }
 
-    private getItems (options: IItemsOptions, callback?: IGetItemsCallback) {
+    public getItems (options: IItemsOptions, callback?: IGetItemsCallback) {
         var controller = this;
         // TODO: make abort of xhr and perform new one
         if (this.loading) return;
@@ -66,7 +66,7 @@ export class MainController {
         }, (data: services.IItems[])=>{
             // TODO: attach error handling
             controller.loading = false;
-            this.emptyResults = !data.length;
+            controller.emptyResults = !data || !data.length;
             callback && callback(data);
         });
     }

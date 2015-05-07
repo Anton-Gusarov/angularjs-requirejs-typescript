@@ -16,7 +16,12 @@ export interface IItems {
     $index?: number;
 }
 
-export class API {
+export interface IAPI {
+    items: any;
+    malls: any;
+}
+
+export class API implements IAPI {
 
     public items: any;
     public malls: any;

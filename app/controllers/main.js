@@ -28,7 +28,6 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         MainController.prototype.getItems = function (options, callback) {
-            var _this = this;
             var controller = this;
             // TODO: make abort of xhr and perform new one
             if (this.loading)
@@ -43,7 +42,7 @@ define(["require", "exports"], function (require, exports) {
             }, function (data) {
                 // TODO: attach error handling
                 controller.loading = false;
-                _this.emptyResults = !data.length;
+                controller.emptyResults = !data || !data.length;
                 callback && callback(data);
             });
         };
