@@ -89,7 +89,7 @@ describe('main controller', ()=>{
 
     });
 
-    iit('loads more items on loadMore call', ()=>{
+    it('loads more items on loadMore call', ()=>{
         var requests = controller.API.items.requests,
             request;
         controller.loadMore();

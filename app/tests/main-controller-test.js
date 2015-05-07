@@ -61,7 +61,7 @@ define(["require", "exports", '../controllers/main', "./mocks/api-mock", "text!.
                 expect(requests.length).toEqual(2);
             });
         });
-        iit('loads more items on loadMore call', function () {
+        it('loads more items on loadMore call', function () {
             var requests = controller.API.items.requests, request;
             controller.loadMore();
             request = requests[0];
