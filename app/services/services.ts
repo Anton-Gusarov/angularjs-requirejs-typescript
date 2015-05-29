@@ -1,6 +1,8 @@
 /// <reference path='../../typings/all.d.ts' />
 import angular = require('angular');
 
+import _catalog = require('api/catalog');
+
 var apiURL;
 
 export interface IItems {
@@ -17,43 +19,43 @@ export interface IItems {
 }
 
 export interface IAPI {
-    items: any;
-    malls: any;
+    user: any;
 }
 
-export class API implements IAPI {
+export class API implements _catalog.API_Catalog, IAPI {
 
+    public user: any;
     public items: any;
     public malls: any;
+
+
+    public apiURL = '';
 
     public $inject = ['$resource', '$location'];
 
     constructor ($resource, $location) {
         var l = $location;
-        apiURL = l.protocol() + '://' + l.host() + (l.port() ? ':' + l.port() : '') + '/api';
+        this.apiURL = l.protocol() + '://' + l.host() + (l.port() ? ':' + l.port() : '') + '/api';
 
-        this.items = $resource(apiURL + '/items', {},
-            {
-                getItems: {
-                    method: 'GET',
-                    isArray: true,
-                    cache: true
-                },
-
-                saveItems: {
-                    method: 'POST'
-                }
-            });
-        this.malls = $resource(apiURL + '/malls', {},
+        this.user = $resource(this.apiURL + '/user', {},
             {
                 getMalls: {
                     method: 'GET',
-                    isArray: true,
-                    cache: true
+                    isArray: true
                 }
             });
     }
 
+}
+
+applyMixins(API, [_catalog.API_Catalog]);
+
+export function applyMixins(derivedCtor: any, baseCtors: any[]) {
+    baseCtors.forEach(baseCtor => {
+        Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+            derivedCtor.prototype[name] = baseCtor.prototype[name];
+        })
+    });
 }
 
 export var services = angular.module('services', ['ngResource'])
