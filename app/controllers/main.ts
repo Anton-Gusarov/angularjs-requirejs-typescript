@@ -105,7 +105,7 @@ export class MainController {
 
     /**
      * Items can be selected in admin mode for edition purposes.
-     * With shift key items are selected within the interval for the multiple edition.
+     * With shift key pressed items are selected within the interval for the multiple edition.
      * Used in main.html
      * @param item
      * @param $event
