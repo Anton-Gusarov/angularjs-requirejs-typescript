@@ -1,1 +1,52 @@
-<ng-transclude></ng-transclude>
+<!--<div class="b-user-bar pull-right dropdown">
+        <img src="/images/svg/user.svg" class="img-circle b-user-bar__user-img" alt=""/>
+        <div class="btn btn-default b-user-bar__btn" data-toggle="dropdown">anton.ere.@erge.eg <span class="caret"></span></div>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Profile</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Logout</a></li>
+        </ul>
+      </div>-->
+<ul class="b-user-bar nav navbar-right navbar-nav">
+    <li class="dropdown"><a data-toggle="dropdown" href="/login">Login <span class="caret"></span></a>
+        <div class="dropdown-menu b-login" ng-class="{
+        'b-login_state-signup': vm_user.signup,
+         'b-login_state-signin': !vm_user.signup
+         }">
+            <form accept-charset="UTF-8" method="post" ng-hide="vm_user.signup">
+                <fieldset>
+                    <div class="form-group">
+                        <input type="text" ng-model="vm_user.loginEvent.login" class="form-control"
+                               placeholder="Username" />
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" ng-model="vm_user.loginEvent.password" type="password" plac
+                               eholder="Passsword" />
+                    </div>
+                    <input class="btn btn-success btn-signup" name="commit" type="submit" value="Log In" />
+                    <button class="btn btn-link" ng-click="vm_user.signup = true">Sign Up...</button>
+                </fieldset>
+            </form>
+            <form accept-charset="UTF-8" method="post" ng-show="vm_user.signup">
+                <fieldset>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Email" />
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" placeholder="Choose passsword" />
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" placeholder="Retype passsword" />
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> I'm agree for everything
+                        </label>
+                    </div>
+                    <input class="btn btn-success" name="commit" type="submit" value="I'm in!" />
+                    <button class="btn btn-link" ng-click="vm_user.signup = false">... back to signing in</button>
+                </fieldset>
+            </form>
+        </div>
+    </li>
+    <li><a href="">What is it for?</a></li>
+</ul>

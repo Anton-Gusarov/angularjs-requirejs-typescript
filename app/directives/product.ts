@@ -32,7 +32,7 @@ export var product: ng.IDirectiveFactory = ($compile)=>{
             replace: true,
             template: template,
             controller: ProductController,
-            link: (scope, iElement, iAttrs, controller)=>{
+            link: (scope: any, iElement, iAttrs, controller)=>{
                 var detailed = angular.element('<product-detailed></product-detailed>');
                 scope
                     .$on('detailed:show', ()=>{

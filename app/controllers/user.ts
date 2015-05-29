@@ -6,22 +6,20 @@ import services = require("../services/services");
 export interface IUserControllerScope {
 
     vm_user: UserController;
-    adminMode: boolean;
     $broadcast: Function;
-
+    $on: Function;
 }
 
 export class UserController {
 
-    public static $inject = ['$scope', 'API', 'admin'];
+    public static $inject = ['$scope', 'API'];
 
-    public forms = {
-    };
-
-    constructor (public $scope: IUserControllerScope, public API: services.IAPI, private adminMode: boolean) {
+    constructor (public $scope: IUserControllerScope, public API: services.IAPI) {
 
         $scope.vm_user = this;
-        $scope.adminMode = this.adminMode;
+        $scope.$on('login', (event)=>{
+
+        });
 
     }
 

@@ -420,7 +420,17 @@ img {
 .b-login {
   padding: 10px;
   width: 250px;
-  .transition('with 1s ease-in');
+  .transition(height 0.3s ease-out);
+  .text-overflow();
+
+}
+
+.b-login_state-signin {
+  height: 154px;
+}
+
+.b-login_state-signup {
+  height: 233px;
 }
 
 .btn-signup {
