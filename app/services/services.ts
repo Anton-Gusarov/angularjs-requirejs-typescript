@@ -1,9 +1,7 @@
 /// <reference path='../../typings/all.d.ts' />
 import angular = require('angular');
 
-import _catalog = require('api/catalog');
-
-var apiURL;
+import _catalog = require('./api/catalog');
 
 export interface IItems {
     id: number;
@@ -36,6 +34,8 @@ export class API implements _catalog.API_Catalog, IAPI {
     constructor ($resource, $location) {
         var l = $location;
         this.apiURL = l.protocol() + '://' + l.host() + (l.port() ? ':' + l.port() : '') + '/api';
+
+        _catalog.API_Catalog.call(this, $resource);
 
         this.user = $resource(this.apiURL + '/user', {},
             {

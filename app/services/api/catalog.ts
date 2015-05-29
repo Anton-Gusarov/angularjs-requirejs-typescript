@@ -9,11 +9,9 @@ export class r {
 
 export class API_Catalog implements iapi.IAPI {
 
-    public apiURL = '';
+    public apiURL;
     public items;
     public malls;
-
-    public $inject = ['$resource'];
 
     constructor ($resource) {
 

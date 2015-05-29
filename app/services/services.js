@@ -1,11 +1,11 @@
-define(["require", "exports", 'angular', 'api/catalog'], function (require, exports, angular, _catalog) {
-    var apiURL;
+define(["require", "exports", 'angular', './api/catalog'], function (require, exports, angular, _catalog) {
     var API = (function () {
         function API($resource, $location) {
             this.apiURL = '';
             this.$inject = ['$resource', '$location'];
             var l = $location;
             this.apiURL = l.protocol() + '://' + l.host() + (l.port() ? ':' + l.port() : '') + '/api';
+            _catalog.API_Catalog.call(this, $resource);
             this.user = $resource(this.apiURL + '/user', {}, {
                 getMalls: {
                     method: 'GET',
