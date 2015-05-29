@@ -59,6 +59,7 @@
           </ul>
         </li>-->
       </ul>
+      <user-bar>
       <!--<div class="b-user-bar pull-right dropdown">
         <img src="/images/svg/user.svg" class="img-circle b-user-bar__user-img" alt=""/>
         <div class="btn btn-default b-user-bar__btn" data-toggle="dropdown">anton.ere.@erge.eg <span class="caret"></span></div>
@@ -70,7 +71,7 @@
       <ul class="b-user-bar nav navbar-right navbar-nav">
         <li class="dropdown"><a data-toggle="dropdown" href="/login">Login <span class="caret"></span></a>
           <div class="dropdown-menu b-login">
-            <form accept-charset="UTF-8" action="/sessions" method="post">
+            <form accept-charset="UTF-8" action="/login" method="post" class="">
               <fieldset>
                 <div class="form-group">
                   <input type="text" class="form-control" placeholder="Username" />
@@ -78,13 +79,35 @@
                 <div class="form-group">
                 <input class="form-control" type="password" placeholder="Passsword" />
                   </div>
-                <input class="btn btn-primary" name="commit" type="submit" value="Log In" />
+                <input class="btn btn-success btn-signup" name="commit" type="submit" value="Log In" />
+                <button class="btn btn-link" ng-click="vm_user.switchForm('signup')">Sign Up...</button>
+              </fieldset>
+            </form>
+            <form accept-charset="UTF-8" action="/signup" method="post" class="hidden">
+              <fieldset>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Email" />
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="password" placeholder="Choose passsword" />
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="password" placeholder="Retype passsword" />
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> I'm agree for everything
+                  </label>
+                </div>
+                <input class="btn btn-success" name="commit" type="submit" value="I'm in!" />
               </fieldset>
             </form>
           </div>
         </li>
         <li><a href="">What is it for?</a></li>
       </ul>
+      </user-bar>
+
       <!--<ul class="nav navbar-nav navbar-right">
         <li><a href="../navbar/">Default</a></li>
         <li><a href="../navbar-static-top/">Static top</a></li>
