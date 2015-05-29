@@ -2,6 +2,7 @@
 import angular = require('angular');
 
 import _catalog = require('./api/catalog');
+import _user = require('./api/user');
 
 export interface IItems {
     id: number;
@@ -20,7 +21,7 @@ export interface IAPI {
     user: any;
 }
 
-export class API implements _catalog.API_Catalog, IAPI {
+export class API implements _catalog.API_Catalog, _user.API_User, IAPI {
 
     public user: any;
     public items: any;
@@ -36,19 +37,12 @@ export class API implements _catalog.API_Catalog, IAPI {
         this.apiURL = l.protocol() + '://' + l.host() + (l.port() ? ':' + l.port() : '') + '/api';
 
         _catalog.API_Catalog.call(this, $resource);
-
-        this.user = $resource(this.apiURL + '/user', {},
-            {
-                getMalls: {
-                    method: 'GET',
-                    isArray: true
-                }
-            });
+        _user.API_User.call(this, $resource);
     }
 
 }
 
-applyMixins(API, [_catalog.API_Catalog]);
+applyMixins(API, [_catalog.API_Catalog, _user.API_User]);
 
 export function applyMixins(derivedCtor: any, baseCtors: any[]) {
     baseCtors.forEach(baseCtor => {

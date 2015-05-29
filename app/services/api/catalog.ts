@@ -3,10 +3,6 @@ import angular = require('angular');
 
 import iapi = require('api.i');
 
-export class r {
-    constructor() {}
-}
-
 export class API_Catalog implements iapi.IAPI {
 
     public apiURL;

@@ -1,4 +1,4 @@
-define(["require", "exports", 'angular', './api/catalog'], function (require, exports, angular, _catalog) {
+define(["require", "exports", 'angular', './api/catalog', './api/user'], function (require, exports, angular, _catalog, _user) {
     var API = (function () {
         function API($resource, $location) {
             this.apiURL = '';
@@ -6,17 +6,12 @@ define(["require", "exports", 'angular', './api/catalog'], function (require, ex
             var l = $location;
             this.apiURL = l.protocol() + '://' + l.host() + (l.port() ? ':' + l.port() : '') + '/api';
             _catalog.API_Catalog.call(this, $resource);
-            this.user = $resource(this.apiURL + '/user', {}, {
-                getMalls: {
-                    method: 'GET',
-                    isArray: true
-                }
-            });
+            _user.API_User.call(this, $resource);
         }
         return API;
     })();
     exports.API = API;
-    applyMixins(API, [_catalog.API_Catalog]);
+    applyMixins(API, [_catalog.API_Catalog, _user.API_User]);
     function applyMixins(derivedCtor, baseCtors) {
         baseCtors.forEach(function (baseCtor) {
             Object.getOwnPropertyNames(baseCtor.prototype).forEach(function (name) {
