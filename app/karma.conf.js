@@ -2,6 +2,7 @@
 module.exports = function(config) {
     config.set({
         frameworks: ['jasmine', 'requirejs'],
+        browsers: ['PhantomJS'],
 
         files: [
             {pattern: 'bower_components/**/*.js', included: false},
