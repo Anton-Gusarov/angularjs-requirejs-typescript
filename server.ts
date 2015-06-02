@@ -1,4 +1,4 @@
-/// <reference path='typings/all.d.ts' />
+/// <reference path='typings/all_node.d.ts' />
 
 import db = require('./db');
 import mysql = require('mysql');
@@ -9,6 +9,8 @@ import request = require('request');
 import uuid = require('node-uuid');
 import fs = require('fs');
 import async = require('async');
+import express_jwt = require('express-jwt');
+import jwt = require('jsonwebtoken');
 
 var mysqlLocal = {
     host     : '127.0.0.1',
@@ -43,6 +45,40 @@ server.use(function(req, res, next) {
  * API methods
  */
 
+server.all('/api/*', express_jwt({secret: 'shhhhhhared-secret', credentialsRequired: false}), (req: express.Request, res: express.Response, next)=>{
+    next();
+});
+
+server.get('/api/user', (req: express.Request, res: express.Response, next)=>{
+    if (req.query.login && req.query.password) {
+        if (req.query.login === 'a') {
+            var token = jwt.sign({
+                iss: 'a'
+            }, 'shhhhhhared-secret');
+            res.json({
+                Result: 'OK',
+                Payload: {
+                    token: token
+                }
+            })
+        } else {
+            next({
+                ERROR: 'Incorrect',
+                code: 401
+            });
+        }
+    } else {
+        next({
+            ERROR: 'No credentials specified',
+            code: 401
+        })
+    }
+});
+
+server.use(<express.ErrorRequestHandler> function(err, req, res, next) {
+    res.send(err.code || 500, err.ERROR);
+    next();
+});
 
 /**
  * Gets a list of cloth items
@@ -82,6 +118,7 @@ server.get('/api/malls', (req: express.Request, res: express.Response)=>{
         res.send(rows);
     }, options);
 });
+
 
 /**
  * Downloading images from remote

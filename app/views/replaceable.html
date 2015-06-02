@@ -7,12 +7,12 @@
         </ul>
       </div>-->
 <ul class="b-user-bar nav navbar-right navbar-nav">
-    <li class="dropdown"><a data-toggle="dropdown" href="/login">Login <span class="caret"></span></a>
+    <li class="dropdown"><a data-toggle="dropdown" href="/user">Login <span class="caret"></span></a>
         <div class="dropdown-menu b-login" ng-class="{
         'b-login_state-signup': vm_user.signup,
          'b-login_state-signin': !vm_user.signup
          }">
-            <form accept-charset="UTF-8" method="post" ng-hide="vm_user.signup">
+            <form accept-charset="UTF-8" method="post" ng-hide="vm_user.signup" ng-submit="vm_user.login()">
                 <fieldset>
                     <div class="form-group">
                         <input type="text" ng-model="vm_user.loginEvent.login" class="form-control"

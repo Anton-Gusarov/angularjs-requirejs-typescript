@@ -1,4 +1,4 @@
-/// <reference path='typings/all.d.ts' />
+/// <reference path='typings/all_node.d.ts' />
 var db = require('./db');
 var mysql = require('mysql');
 var express = require('express');
@@ -8,6 +8,8 @@ var request = require('request');
 var uuid = require('node-uuid');
 var fs = require('fs');
 var async = require('async');
+var express_jwt = require('express-jwt');
+var jwt = require('jsonwebtoken');
 var mysqlLocal = {
     host: '127.0.0.1',
     user: 'root',
@@ -30,6 +32,40 @@ server.use(function (req, res, next) {
 /**
  * API methods
  */
+server.all('/api/*', express_jwt({ secret: 'shhhhhhared-secret', credentialsRequired: false }), function (req, res, next) {
+    next();
+});
+server.get('/api/user', function (req, res, next) {
+    if (req.query.login && req.query.password) {
+        if (req.query.login === 'a') {
+            var token = jwt.sign({
+                iss: 'a'
+            }, 'shhhhhhared-secret');
+            res.json({
+                Result: 'OK',
+                Payload: {
+                    token: token
+                }
+            });
+        }
+        else {
+            next({
+                ERROR: 'Incorrect',
+                code: 401
+            });
+        }
+    }
+    else {
+        next({
+            ERROR: 'No credentials specified',
+            code: 401
+        });
+    }
+});
+server.use(function (err, req, res, next) {
+    res.send(err.code || 500, err.ERROR);
+    next();
+});
 /**
  * Gets a list of cloth items
  */

@@ -7,6 +7,7 @@ export class API_User implements iapi.IAPI {
 
     public apiURL;
     public user;
+    public userToken;
 
     constructor ($resource) {
 
@@ -20,6 +21,11 @@ export class API_User implements iapi.IAPI {
                     method: 'POST'
                 }
             });
+    }
+
+    public setUserToken(token) {
+        this.user.token = token;
+        this.userToken = token;
     }
 
 }

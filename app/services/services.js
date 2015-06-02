@@ -1,6 +1,7 @@
 define(["require", "exports", 'angular', './api/catalog', './api/user'], function (require, exports, angular, _catalog, _user) {
     var API = (function () {
         function API($resource, $location) {
+            this.userToken = '';
             this.apiURL = '';
             this.$inject = ['$resource', '$location'];
             var l = $location;

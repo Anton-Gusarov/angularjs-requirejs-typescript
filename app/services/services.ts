@@ -19,6 +19,12 @@ export interface IItems {
 
 export interface IAPI {
     user: any;
+    items: any;
+    malls: any;
+
+    userToken: string;
+
+    setUserToken: (token: string)=>void;
 }
 
 export class API implements _catalog.API_Catalog, _user.API_User, IAPI {
@@ -26,6 +32,7 @@ export class API implements _catalog.API_Catalog, _user.API_User, IAPI {
     public user: any;
     public items: any;
     public malls: any;
+    public userToken = '';
 
 
     public apiURL = '';
@@ -39,6 +46,8 @@ export class API implements _catalog.API_Catalog, _user.API_User, IAPI {
         _catalog.API_Catalog.call(this, $resource);
         _user.API_User.call(this, $resource);
     }
+
+    setUserToken: (token: string)=> void;
 
 }
 

@@ -5,25 +5,33 @@ import services = require("../services/services");
 
 export interface IUserControllerScope {
 
-    vm_user: UserController;
-    $broadcast: Function;
     $on: Function;
+    token: string;
 }
 
 export class UserController {
 
     public static $inject = ['$scope', 'API'];
 
+    public token = '';
+
     constructor (public $scope: IUserControllerScope, public API: services.IAPI) {
 
-        $scope.vm_user = this;
-        $scope.$on('login', (event)=>{
-
+        var user = this;
+        $scope.$on('login', (event, loginData)=>{
+            user.API.user.login(loginData,
+            (data)=>{
+                    if (data.ERROR) {
+                        user.onerror(data.ERROR);
+                        return;
+                    }
+                    user.API.setUserToken(data.Payload.token);
+                });
         });
 
     }
 
-    public switchForm(type:string) {
+    public onerror (error) {
 
     }
 

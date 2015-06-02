@@ -8,12 +8,15 @@ export class API_Catalog implements iapi.IAPI {
     public apiURL;
     public items;
     public malls;
+    public userToken;
 
     constructor ($resource) {
 
-        var apiURL = this.apiURL;
+        var apiURL = this.apiURL,
+            catalog = this;
 
-        this.items = $resource(apiURL + '/items', {},
+        this.items = $resource(apiURL + '/items', {token: ()=>{
+                return catalog.userToken}},
             {
                 getItems: {
                     method: 'GET',
@@ -26,7 +29,7 @@ export class API_Catalog implements iapi.IAPI {
                 }
             });
 
-        this.malls = $resource(apiURL + '/malls', {},
+        this.malls = $resource(apiURL + '/malls', {token: ()=>{return catalog.userToken}},
             {
                 getMalls: {
                     method: 'GET',
