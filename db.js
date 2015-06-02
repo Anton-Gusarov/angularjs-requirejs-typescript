@@ -1,4 +1,4 @@
-/// <reference path='typings/all.d.ts' />
+/// <reference path='typings/all_node.d.ts' />
 var _ = require('lodash');
 var API = (function () {
     function API() {
@@ -18,13 +18,11 @@ var API = (function () {
         }
         if (where.length)
             whereString = " WHERE " + where.join(" AND ");
-        this.connection.query("SELECT DISTINCT Items.* FROM `Items`, `ItemsMalls_Relation` AS rel" + whereString + limit, this.callback.bind(this, callback || (function () {
-        })));
+        this.connection.query("SELECT DISTINCT Items.* FROM `Items`, `ItemsMalls_Relation` AS rel" + whereString + limit, this.callback.bind(this, callback || (function () { })));
     };
     API.prototype.saveItems_Malls = function (data, callback) {
         var _this = this;
-        var insert_query = [], api = this, callback = callback || (function () {
-        }), items_ids = _.map(data, function (item) {
+        var insert_query = [], api = this, callback = callback || (function () { }), items_ids = _.map(data, function (item) {
             item.malls.forEach(function (mall) {
                 insert_query.push("(" + item.id + ", " + mall.Mall_ID + ")");
             });
@@ -60,13 +58,11 @@ var API = (function () {
         data.forEach(function (item) {
             updates.push("(" + item.id + ", " + _this.connection.escape(item.to) + ")");
         });
-        this.connection.query(query + updates.join(", "), this.callback.bind(this, callback || (function () {
-        })));
+        this.connection.query(query + updates.join(", "), this.callback.bind(this, callback || (function () { })));
     };
     API.prototype.getMalls = function (callback, options) {
         var options = options || {}, limit = options.length ? " LIMIT " + options.length + " OFFSET " + (options.start || 0) : "";
-        this.connection.query("SELECT * FROM `Malls`" + limit, this.callback.bind(this, callback || (function () {
-        })));
+        this.connection.query("SELECT * FROM `Malls`" + limit, this.callback.bind(this, callback || (function () { })));
     };
     return API;
 })();

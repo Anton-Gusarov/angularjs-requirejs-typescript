@@ -1,4 +1,4 @@
-/// <reference path='typings/all.d.ts' />
+/// <reference path='typings/all_node.d.ts' />
 
 import mysql = require('mysql');
 import _ = require('lodash');
