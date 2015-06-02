@@ -10,6 +10,7 @@ var fs = require('fs');
 var async = require('async');
 var express_jwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
+var cors = require('cors');
 var mysqlLocal = {
     host: '127.0.0.1',
     user: 'root',
@@ -24,15 +25,10 @@ var api = new db.API(), server = express();
 api.setConnection(connection);
 server.use(express.static('app'));
 server.use(bodyParser.json());
-server.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
 /**
  * API methods
  */
-server.all('/api/*', express_jwt({ secret: 'shhhhhhared-secret', credentialsRequired: false }), function (req, res, next) {
+server.all('/api/*', cors(), express_jwt({ secret: 'shhhhhhared-secret', credentialsRequired: false }), function (req, res, next) {
     next();
 });
 server.get('/api/user', function (req, res, next) {

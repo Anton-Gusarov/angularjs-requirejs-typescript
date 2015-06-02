@@ -12,6 +12,8 @@ import async = require('async');
 import express_jwt = require('express-jwt');
 import jwt = require('jsonwebtoken');
 
+var cors = require('cors');
+
 var mysqlLocal = {
     host     : '127.0.0.1',
     user     : 'root',
@@ -33,11 +35,6 @@ var api = new db.API(),
 api.setConnection(connection);
 server.use(express.static('app'));
 server.use(bodyParser.json());
-server.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
 
 
 
@@ -45,7 +42,7 @@ server.use(function(req, res, next) {
  * API methods
  */
 
-server.all('/api/*', express_jwt({secret: 'shhhhhhared-secret', credentialsRequired: false}), (req: express.Request, res: express.Response, next)=>{
+server.all('/api/*', cors(), express_jwt({secret: 'shhhhhhared-secret', credentialsRequired: false}), (req: express.Request, res: express.Response, next)=>{
     next();
 });
 
