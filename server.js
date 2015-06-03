@@ -9,8 +9,8 @@ var uuid = require('node-uuid');
 var fs = require('fs');
 var async = require('async');
 var express_jwt = require('express-jwt');
-var jwt = require('jsonwebtoken');
-var cors = require('cors');
+var auth = require('./mq_connect');
+var cors = require('cors'), authPromise = auth.connect();
 var mysqlLocal = {
     host: '127.0.0.1',
     user: 'root',
@@ -33,6 +33,19 @@ server.all('/api/*', cors(), express_jwt({ secret: 'shhhhhhared-secret', credent
 });
 server.get('/api/user', function (req, res, next) {
     if (req.query.login && req.query.password) {
+        auth.login(req.query.login, req.query.password, function (err, token) {
+            if (err) {
+                next(err);
+            }
+            res.json({
+                Result: 'OK',
+                Payload: {
+                    token: token
+                }
+            });
+        });
+    }
+    /*if (req.query.login && req.query.password) {
         if (req.query.login === 'a') {
             var token = jwt.sign({
                 iss: 'a'
@@ -42,24 +55,22 @@ server.get('/api/user', function (req, res, next) {
                 Payload: {
                     token: token
                 }
-            });
-        }
-        else {
+            })
+        } else {
             next({
                 ERROR: 'Incorrect',
                 code: 401
             });
         }
-    }
-    else {
+    } else {
         next({
             ERROR: 'No credentials specified',
             code: 401
-        });
-    }
+        })
+    }*/
 });
 server.use(function (err, req, res, next) {
-    res.send(err.code || 500, err.ERROR);
+    res.send(err.code || 500, err);
     next();
 });
 /**

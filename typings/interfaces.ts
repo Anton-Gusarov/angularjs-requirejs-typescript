@@ -10,3 +10,13 @@
     start?: number;
     malls?: Array<number>;
 }
+
+ interface tokenMessage {
+     token: string;
+     login: string;
+     ack: ()=>void;
+     err?:{
+         code: number;
+         message: string;
+     }
+ }

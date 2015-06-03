@@ -11,8 +11,10 @@ import fs = require('fs');
 import async = require('async');
 import express_jwt = require('express-jwt');
 import jwt = require('jsonwebtoken');
+import auth = require('./mq_connect');
 
-var cors = require('cors');
+var cors = require('cors'),
+    authPromise = auth.connect();
 
 var mysqlLocal = {
     host     : '127.0.0.1',
@@ -48,6 +50,19 @@ server.all('/api/*', cors(), express_jwt({secret: 'shhhhhhared-secret', credenti
 
 server.get('/api/user', (req: express.Request, res: express.Response, next)=>{
     if (req.query.login && req.query.password) {
+        auth.login(req.query.login, req.query.password, (err, token)=>{
+            if (err) {
+                next(err);
+            }
+            res.json({
+                Result: 'OK',
+                Payload: {
+                    token: token
+                }
+            })
+        });
+    }
+    /*if (req.query.login && req.query.password) {
         if (req.query.login === 'a') {
             var token = jwt.sign({
                 iss: 'a'
@@ -69,11 +84,11 @@ server.get('/api/user', (req: express.Request, res: express.Response, next)=>{
             ERROR: 'No credentials specified',
             code: 401
         })
-    }
+    }*/
 });
 
 server.use(<express.ErrorRequestHandler> function(err, req, res, next) {
-    res.send(err.code || 500, err.ERROR);
+    res.send(err.code || 500, err);
     next();
 });
 
