@@ -31,10 +31,10 @@ export function connect () {
         .then((ch)=> {channel = ch; return ch.assertExchange('auth', 'direct')})
 
         .then(()=>channel.assertQueue('token.auth', {durable: false}))
-        .then((q)=>{tokenQueue = q; return channel.bindQueue(q, 'auth', 'token.auth')})
+        .then((q)=>{tokenQueue = q; return channel.bindQueue('token.auth', 'auth', 'token.auth')})
 
         .then(()=>channel.assertQueue('login.auth', {durable: false}))
-        .then((q)=>{loginQueue = q; return channel.bindQueue(q, 'auth', 'login.auth')})
+        .then((q)=>{loginQueue = q; return channel.bindQueue('login.auth', 'auth', 'login.auth')})
 
         .then(()=> {
             resolver.resolve(<loginExchange>{
@@ -47,7 +47,7 @@ export function connect () {
 
     resolver.promise.then((auth: loginExchange)=>{
 
-        return channel.consume(tokenQueue, (msg: tokenMessage)=>{
+        return channel.consume('token.auth', (msg: tokenMessage)=>{
             msg.ack();
 
             if (msg.login && loginHash[msg.login]) {
@@ -62,9 +62,7 @@ export function connect () {
 
             });
         })
-        .catch((err)=>{
-            console.error(err);
-        });
+        .catch();
 
 
     return resolver.promise;
