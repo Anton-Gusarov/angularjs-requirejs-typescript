@@ -45,6 +45,12 @@ server.get('/api/user', function (req, res, next) {
             });
         });
     }
+    else {
+        next({
+            ERROR: 'No credentials specified',
+            code: 401
+        });
+    }
     /*if (req.query.login && req.query.password) {
         if (req.query.login === 'a') {
             var token = jwt.sign({
@@ -62,11 +68,6 @@ server.get('/api/user', function (req, res, next) {
                 code: 401
             });
         }
-    } else {
-        next({
-            ERROR: 'No credentials specified',
-            code: 401
-        })
     }*/
 });
 server.use(function (err, req, res, next) {

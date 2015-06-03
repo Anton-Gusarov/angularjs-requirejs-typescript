@@ -61,6 +61,11 @@ server.get('/api/user', (req: express.Request, res: express.Response, next)=>{
                 }
             })
         });
+    } else {
+        next({
+            ERROR: 'No credentials specified',
+            code: 401
+        });
     }
     /*if (req.query.login && req.query.password) {
         if (req.query.login === 'a') {
@@ -79,11 +84,6 @@ server.get('/api/user', (req: express.Request, res: express.Response, next)=>{
                 code: 401
             });
         }
-    } else {
-        next({
-            ERROR: 'No credentials specified',
-            code: 401
-        })
     }*/
 });
 
