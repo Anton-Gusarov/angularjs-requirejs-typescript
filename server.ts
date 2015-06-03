@@ -10,7 +10,6 @@ import uuid = require('node-uuid');
 import fs = require('fs');
 import async = require('async');
 import express_jwt = require('express-jwt');
-import jwt = require('jsonwebtoken');
 import auth = require('./mq_connect');
 
 var cors = require('cors'),
@@ -48,6 +47,8 @@ server.all('/api/*', cors(), express_jwt({secret: 'shhhhhhared-secret', credenti
     next();
 });
 
+
+
 server.get('/api/user', (req: express.Request, res: express.Response, next)=>{
     if (req.query.login && req.query.password) {
         auth.login(req.query.login, req.query.password, (err, token)=>{
@@ -67,29 +68,6 @@ server.get('/api/user', (req: express.Request, res: express.Response, next)=>{
             code: 401
         });
     }
-    /*if (req.query.login && req.query.password) {
-        if (req.query.login === 'a') {
-            var token = jwt.sign({
-                iss: 'a'
-            }, 'shhhhhhared-secret');
-            res.json({
-                Result: 'OK',
-                Payload: {
-                    token: token
-                }
-            })
-        } else {
-            next({
-                ERROR: 'Incorrect',
-                code: 401
-            });
-        }
-    }*/
-});
-
-server.use(<express.ErrorRequestHandler> function(err, req, res, next) {
-    res.send(err.code || 500, err);
-    next();
 });
 
 /**
@@ -174,6 +152,11 @@ server.get('/api/get_images', (req: express.Request, res: express.Response)=>{
     }, options);
 
 
+});
+
+server.use(<express.ErrorRequestHandler> function(err, req, res, next) {
+    res.status(err.code || 500).send(err);
+    next();
 });
 
 server.listen(process.env.PORT || 8081);

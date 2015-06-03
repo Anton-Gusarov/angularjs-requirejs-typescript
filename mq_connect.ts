@@ -15,10 +15,10 @@ var loginHash = {};
 var channel, tokenQueue, loginQueue;
 
 export function login(login, password, cb) {
-    channel.publish('login.auth', {
+    channel.publish('auth', 'login.auth', new Buffer(JSON.stringify({
         login: login,
         password: password
-    });
+    })));
 
     loginHash[login] = cb;
 }
@@ -43,26 +43,31 @@ export function connect () {
                 tokenQueue: tokenQueue,
                 loginQueue: loginQueue
             })
+        })
+    .catch((e)=>{
+            console.log(e);
         });
+
 
     resolver.promise.then((auth: loginExchange)=>{
 
-        return channel.consume('token.auth', (msg: tokenMessage)=>{
-            msg.ack();
+        return channel.consume('token.auth', (msg)=>{
+            var content = JSON.parse(msg.content.toString());
+            channel.ack(msg);
 
-            if (msg.login && loginHash[msg.login]) {
-                    if (!msg.err) {
-                        loginHash[msg.login](null, msg.token);
+            if (content.login && loginHash[content.login]) {
+                    if (!content.err) {
+                        loginHash[content.login](null, content.token);
+                        delete loginHash[content.login];
                         return;
                     }
-                loginHash[msg.login](msg.err);
-                delete loginHash[msg.login];
+                loginHash[content.login](content.err);
+                delete loginHash[content.login];
                 return;
                 }
 
             });
-        })
-        .catch();
+        });
 
 
     return resolver.promise;

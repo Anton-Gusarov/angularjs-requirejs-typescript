@@ -51,28 +51,6 @@ server.get('/api/user', function (req, res, next) {
             code: 401
         });
     }
-    /*if (req.query.login && req.query.password) {
-        if (req.query.login === 'a') {
-            var token = jwt.sign({
-                iss: 'a'
-            }, 'shhhhhhared-secret');
-            res.json({
-                Result: 'OK',
-                Payload: {
-                    token: token
-                }
-            })
-        } else {
-            next({
-                ERROR: 'Incorrect',
-                code: 401
-            });
-        }
-    }*/
-});
-server.use(function (err, req, res, next) {
-    res.send(err.code || 500, err);
-    next();
 });
 /**
  * Gets a list of cloth items
@@ -130,6 +108,10 @@ server.get('/api/get_images', function (req, res) {
             });
         });
     }, options);
+});
+server.use(function (err, req, res, next) {
+    res.status(err.code || 500).send(err);
+    next();
 });
 server.listen(process.env.PORT || 8081);
 console.log('Listening on port ' + (process.env.PORT || 8081));
