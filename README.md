@@ -13,3 +13,5 @@ This repositoty provides the template for any application.
 ```sh
 node server.js --production
 ```
+
+Note: There is no 40 contributors.
